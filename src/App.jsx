@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Pagination from "./components/Pagination";
+import Sorting from "./components/Sorting";
 
 function App() {
 	const [Loading, setLoading] = useState(true);
 	const [Recipes, setRecipes] = useState([]);
 	const [CurrentPage, setCurrentPage] = useState(1);
 	const [TotalRecipes, setTotalRecipes] = useState(0);
+	const [SortOption, setSortOption] = useState();
 	const RecipesPerPage = 6;
 	//function to fetch all recipes:
 	const fetchRecipes = async (limit, skip) => {
@@ -34,16 +36,14 @@ function App() {
 		setCurrentPage(newPage);
 	};
 
+	const handleSortChange = (sortOption) => {
+		setSortOption(sortOption);
+	};
+
 	return (
 		<>
 			<div className="container">
-				<select name="sorting" id="sorting">
-					<option value="defualt">sort by</option>
-					<option value="calories-desc">Calories high to low</option>
-					<option value="calories-asc">Calories low to high</option>
-					<option value="name-az">Name A to Z</option>
-					<option value="ingredients-desc">Ingredients low to high</option>
-				</select>
+				<Sorting onSortChange={handleSortChange} />
 				<table>
 					<thead>
 						<tr>
