@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Pagination from "./components/Pagination";
 
 function App() {
 	const [Loading, setLoading] = useState(true);
@@ -29,21 +30,20 @@ function App() {
 		fetchRecipes(RecipesPerPage, skip);
 	}, [CurrentPage]);
 
-	const handlePreviousPage = () => {
-		if (CurrentPage > 1) {
-			setCurrentPage(CurrentPage - 1);
-		}
-	};
-
-	const handleNextPage = () => {
-		if (CurrentPage * RecipesPerPage < TotalRecipes) {
-			setCurrentPage(CurrentPage + 1);
-		}
+	const handlePageChange = (newPage) => {
+		setCurrentPage(newPage);
 	};
 
 	return (
-		<main>
-			<div className="table-container">
+		<>
+			<div className="container">
+				<select name="sorting" id="sorting">
+					<option value="defualt">sort by</option>
+					<option value="calories-desc">Calories high to low</option>
+					<option value="calories-asc">Calories low to high</option>
+					<option value="name-az">Name A to Z</option>
+					<option value="ingredients-desc">Ingredients low to high</option>
+				</select>
 				<table>
 					<thead>
 						<tr>
@@ -66,26 +66,39 @@ function App() {
 								</tr>
 							))
 						) : (
-							<tr>
-								<td>Fetching Data</td>
+							<tr className="preloader">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+									<path
+										fill="none"
+										stroke="#FFFFFF"
+										stroke-width="15"
+										stroke-linecap="round"
+										stroke-dasharray="300 385"
+										stroke-dashoffset="0"
+										d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
+									>
+										<animate
+											attributeName="stroke-dashoffset"
+											calcMode="spline"
+											dur="2"
+											values="685;-685"
+											keySplines="0 0 1 1"
+											repeatCount="indefinite"
+										></animate>
+									</path>
+								</svg>
 							</tr>
 						)}
 					</tbody>
 				</table>
-				<div className="pagination">
-					<button onClick={handlePreviousPage} disabled={CurrentPage === 1}>
-						Previous
-					</button>
-					<span>Page {CurrentPage}</span>
-					<button
-						onClick={handleNextPage}
-						disabled={CurrentPage * RecipesPerPage >= TotalRecipes}
-					>
-						Next
-					</button>
-				</div>
+				<Pagination
+					currentPage={CurrentPage}
+					totalRecipes={TotalRecipes}
+					recipesPerPage={RecipesPerPage}
+					onPageChange={handlePageChange}
+				/>
 			</div>
-		</main>
+		</>
 	);
 }
 
