@@ -50,10 +50,11 @@ function App() {
 
 	const handleSortChange = (sortOption) => {
 		setSortOption(sortOption);
+		setCurrentPage(1);
 	};
 
-	const handleInputChange = (searchQuery) => {
-		setSearchQuery(searchQuery);
+	const handleInputChange = (event) => {
+		setSearchQuery(event.target.value);
 		setCurrentPage(1);
 	};
 

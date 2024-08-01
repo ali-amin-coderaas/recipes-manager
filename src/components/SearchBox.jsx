@@ -1,9 +1,6 @@
 import React from "react";
 
 const SearchBox = ({ onInputChange }) => {
-	const handleInputChnage = (event) => {
-		onInputChange(event.target.value);
-	};
 	return (
 		<div className="search-box">
 			<input
@@ -11,7 +8,7 @@ const SearchBox = ({ onInputChange }) => {
 				name=""
 				id=""
 				placeholder="Search by name"
-				onChange={handleInputChnage}
+				onChange={onInputChange}
 			/>
 		</div>
 	);
