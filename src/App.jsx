@@ -10,33 +10,18 @@ function App() {
 	const [Recipes, setRecipes] = useState([]);
 	const [CurrentPage, setCurrentPage] = useState(1);
 	const [TotalRecipes, setTotalRecipes] = useState(0);
+	const [SearchQuery, setSearchQuery] = useState("");
 	const [SortOption, setSortOption] = useState({
-		sortBy: "caloriesPerServing",
-		order: "asc",
+		sortBy: "",
+		order: "",
 	});
 	const RecipesPerPage = 6;
 	//function to fetch all recipes:
-	const fetchRecipes = async (limit, skip, sortBy, order) => {
+	const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`https://dummyjson.com/recipes?limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
-			);
-			const data = await response.json();
-			setRecipes(data.recipes);
-			setTotalRecipes(data.total);
-			setLoading(false);
-		} catch (error) {
-			console.error(error);
-			setLoading(false);
-		}
-	};
-
-	const searchRecipes = async (searchQuery) => {
-		try {
-			setLoading(true);
-			const response = await fetch(
-				`https://dummyjson.com/recipes/search?q=${searchQuery}`
+				`https://dummyjson.com/recipes/search?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
 			);
 			const data = await response.json();
 			setRecipes(data.recipes);
@@ -50,8 +35,14 @@ function App() {
 
 	useEffect(() => {
 		const skip = (CurrentPage - 1) * RecipesPerPage;
-		fetchRecipes(RecipesPerPage, skip, SortOption.sortBy, SortOption.order);
-	}, [CurrentPage]);
+		fetchRecipes(
+			SearchQuery,
+			RecipesPerPage,
+			skip,
+			SortOption.sortBy,
+			SortOption.order
+		);
+	}, [CurrentPage, SortOption, SearchQuery]);
 
 	const handlePageChange = (newPage) => {
 		setCurrentPage(newPage);
@@ -61,11 +52,16 @@ function App() {
 		setSortOption(sortOption);
 	};
 
+	const handleInputChange = (searchQuery) => {
+		setSearchQuery(searchQuery);
+		setCurrentPage(1);
+	};
+
 	return (
 		<>
 			<div className="container">
 				<div className="header">
-					<SearchBox />
+					<SearchBox onInputChange={handleInputChange} />
 					<Sorting onSortChange={handleSortChange} />
 				</div>
 
