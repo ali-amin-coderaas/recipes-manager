@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Pagination from "./components/Pagination";
 import RecipesTable from "./components/RecipesTable";
+import SearchBox from "./components/SearchBox";
 import Sorting from "./components/Sorting";
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
 	const [CurrentPage, setCurrentPage] = useState(1);
 	const [TotalRecipes, setTotalRecipes] = useState(0);
 	const [SortOption, setSortOption] = useState({
-		sortBy: "name",
+		sortBy: "caloriesPerServing",
 		order: "asc",
 	});
 	const RecipesPerPage = 6;
@@ -31,11 +32,11 @@ function App() {
 		}
 	};
 
-	const sortRecipes = async (sortBy, order) => {
+	const searchRecipes = async (searchQuery) => {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`https://dummyjson.com/recipes?sortBy=${sortBy}&order=${order}`
+				`https://dummyjson.com/recipes/search?q=${searchQuery}`
 			);
 			const data = await response.json();
 			setRecipes(data.recipes);
@@ -63,7 +64,10 @@ function App() {
 	return (
 		<>
 			<div className="container">
-				<Sorting onSortChange={handleSortChange} />
+				<div className="header">
+					<SearchBox />
+					<Sorting onSortChange={handleSortChange} />
+				</div>
 
 				<RecipesTable recipes={Recipes} loading={Loading} />
 
