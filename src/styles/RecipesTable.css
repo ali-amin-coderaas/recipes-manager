@@ -1,0 +1,24 @@
+table {
+	border-collapse: separate;
+	border-spacing: 1rem;
+	text-align: center;
+	overflow-x: scroll;
+	width: 100%;
+	thead {
+		tr {
+			th {
+				border: 1px solid white;
+				border-radius: 1rem;
+				white-space: nowrap;
+				padding: 1rem;
+				width: fit-content;
+			}
+		}
+	}
+	tbody {
+		tr {
+			td {
+			}
+		}
+	}
+}

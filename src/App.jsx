@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import Pagination from "./components/Pagination";
 import RecipesTable from "./components/RecipesTable";
 import SearchBox from "./components/SearchBox";
 import Sorting from "./components/Sorting";
+import "./styles/App.css";
 
 function App() {
 	const [Loading, setLoading] = useState(true);

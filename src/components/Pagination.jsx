@@ -12,13 +12,30 @@ const Pagination = ({
 		}
 	};
 
+	const handleFirstPage = () => {
+		if (currentPage > 1) {
+			onPageChange(1);
+		}
+	};
+
 	const handleNextPage = () => {
 		if (currentPage * recipesPerPage < totalRecipes) {
 			onPageChange(currentPage + 1);
 		}
 	};
+
+	const handleLastPage = () => {
+		const lastPage = Math.ceil(totalRecipes / recipesPerPage);
+		if (currentPage < lastPage) {
+			onPageChange(lastPage);
+		}
+	};
+
 	return (
 		<div className="pagination">
+			<button onClick={handleFirstPage} disabled={currentPage === 1}>
+				{"<<"}
+			</button>
 			<button onClick={handlePreviousPage} disabled={currentPage === 1}>
 				{"<"}
 			</button>
@@ -28,6 +45,12 @@ const Pagination = ({
 				disabled={currentPage * recipesPerPage >= totalRecipes}
 			>
 				{">"}
+			</button>
+			<button
+				onClick={handleLastPage}
+				disabled={currentPage * recipesPerPage >= totalRecipes}
+			>
+				{">>"}
 			</button>
 		</div>
 	);
