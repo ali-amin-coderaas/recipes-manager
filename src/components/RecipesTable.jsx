@@ -4,6 +4,7 @@ import "../styles/RecipesTable.css";
 const RecipesTable = ({ recipes, loading }) => {
 	return (
 		<table>
+			<caption>Recipes Manager</caption>
 			<thead>
 				<tr>
 					<th>Recipe Name</th>
@@ -30,7 +31,7 @@ const RecipesTable = ({ recipes, loading }) => {
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
 								<path
 									fill="none"
-									stroke="#FFFFFF"
+									stroke="#000000"
 									strokeWidth="15"
 									strokeLinecap="round"
 									strokeDasharray="300 385"

@@ -1,6 +1,4 @@
 body {
-	color: white;
-	background: #271f3b;
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
 	justify-content: center;
@@ -21,6 +19,11 @@ body {
 		justify-content: space-around;
 		width: 100%;
 	}
+}
+
+.pagination {
+	display: flex;
+	gap: 1rem;
 }
 
 .search-box input[type="text"] {
