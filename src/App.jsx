@@ -21,7 +21,7 @@ function App() {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`http://localhost:8080/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
+				`https://recipes-expressjs-i6wd.onrender.com/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
 			);
 			const data = await response.json();
 			setRecipes(data.recipes.recipes);
