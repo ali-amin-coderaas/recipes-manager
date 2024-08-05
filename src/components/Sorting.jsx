@@ -16,7 +16,6 @@ const Sorting = ({ onSortChange }) => {
 			<option value="caloriesPerServing-desc">Calories high to low</option>
 			<option value="caloriesPerServing-asc">Calories low to high</option>
 			<option value="name-asc">Name A to Z</option>
-			<option value="ingredients-desc">Ingredients low to high</option>
 		</select>
 	);
 };

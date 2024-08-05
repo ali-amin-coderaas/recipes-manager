@@ -19,8 +19,8 @@ const RecipesTable = ({ recipes, loading }) => {
 					recipes.map((recipe) => (
 						<tr key={recipe.id}>
 							<td>{recipe.name}</td>
-							<td> {recipe.ingredients.join(", ")}</td>
-							<td> {recipe.instructions.join(" ")} </td>
+							<td> {recipe.ingredients}</td>
+							<td> {recipe.instructions} </td>
 							<td> {recipe.servings} </td>
 							<td> {recipe.caloriesPerServing} </td>
 						</tr>

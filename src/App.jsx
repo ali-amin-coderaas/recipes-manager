@@ -21,10 +21,10 @@ function App() {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`https://dummyjson.com/recipes/search?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
+				`http://localhost:8080/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
 			);
 			const data = await response.json();
-			setRecipes(data.recipes);
+			setRecipes(data.recipes.recipes);
 			setTotalRecipes(data.total);
 			setLoading(false);
 		} catch (error) {
