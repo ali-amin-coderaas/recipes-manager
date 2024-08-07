@@ -1,10 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
+import RegisterForm from "./components/RegisterForm.jsx";
+import ErrorPage from "./ErrorPage.jsx";
 import "./styles/index.css";
+
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <App />,
+		errorElement: <ErrorPage />,
+	},
+	{
+		path: "/register",
+		element: <RegisterForm />,
+		errorElement: <ErrorPage />,
+	},
+	{
+		path: "/login",
+		element: <LoginForm />,
+		errorElement: <ErrorPage />,
+	},
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
-		<App />
+		<RouterProvider router={router} />
 	</React.StrictMode>
 );
