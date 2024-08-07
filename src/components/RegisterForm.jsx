@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import "../styles/register.css";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";
@@ -22,18 +23,35 @@ const RegisterForm = () => {
 		);
 	};
 
+	const registerUser = async (first_name, last_name, email, password) => {
+		try {
+			const response = await fetch("http://localhost:8080/register", {
+				headers: { "Content-Type": "application/json" },
+				method: "POST",
+				body: JSON.stringify({ first_name, last_name, email, password }),
+			});
+			const id = await response.json();
+
+			console.log(id);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const IsFormValid = () => {
 		return FirstName && validateEmail(Email) && Password.length >= 8;
 	};
 
-	const hadnleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		alert("account created successfully");
+		if (IsFormValid()) {
+			registerUser(FirstName, LastName, Email, Password);
+		}
 		clearForm();
 	};
 	return (
 		<div className="register">
-			<form onSubmit={hadnleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<h2>Register An Account</h2>
 					<InputField
@@ -77,10 +95,10 @@ const RegisterForm = () => {
 						Create account
 					</button>
 					<p>
-						Already have an account{" "}
-						<span>
-							<a href="#">Log In</a>
-						</span>
+						Already have an account?{" "}
+						<Link to={"/login"}>
+							<a>Log In</a>
+						</Link>
 					</p>
 				</fieldset>
 			</form>

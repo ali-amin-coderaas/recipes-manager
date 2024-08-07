@@ -16,12 +16,11 @@ function App() {
 		order: "",
 	});
 	const RecipesPerPage = 6;
-	//function to fetch all recipes:
 	const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 		try {
 			setLoading(true);
 			const response = await fetch(
-				`https://recipes-expressjs-i6wd.onrender.com/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
+				`http://localhost:8080/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
 			);
 			const data = await response.json();
 			setRecipes(data.recipes.recipes);
