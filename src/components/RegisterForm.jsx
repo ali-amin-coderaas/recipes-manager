@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { hostedEndpoint } from "../api/Endpoints";
+import { hostedEndpoint, localEndpoint } from "../api/Endpoints";
 import "../styles/register.css";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";
@@ -26,7 +26,7 @@ const RegisterForm = () => {
 
 	const registerUser = async (first_name, last_name, email, password) => {
 		try {
-			const response = await fetch(`${hostedEndpoint}/register`, {
+			const response = await fetch(`${localEndpoint}/register`, {
 				headers: { "Content-Type": "application/json" },
 				method: "POST",
 				body: JSON.stringify({ first_name, last_name, email, password }),

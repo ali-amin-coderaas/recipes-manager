@@ -1,8 +1,8 @@
-import { hostedEndpoint } from "./Endpoints";
+import { hostedEndpoint, localEndpoint } from "./Endpoints";
 
 export const loginUser = async (email, password) => {
 	try {
-		const response = await fetch(`${hostedEndpoint}/login`, {
+		const response = await fetch(`${localEndpoint}/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
