@@ -56,7 +56,7 @@ const RegisterForm = () => {
 					<h2>Register An Account</h2>
 					<InputField
 						type={"text"}
-						value={LastName}
+						value={FirstName}
 						placeholder={"First name"}
 						label={"First name"}
 						onChange={(e) => {
