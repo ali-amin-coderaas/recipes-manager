@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { hostedEndpoint, localEndpoint } from "../api/Endpoints";
+import { Link } from "react-router-dom";
+import { registerUser } from "../api/auth";
 import "../styles/register.css";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";
 
 const RegisterForm = () => {
-	const [FirstName, setFirstName] = useState("");
-	const [LastName, setLastName] = useState("");
-	const [Email, setEmail] = useState("");
-	const [Password, setPassword] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	const clearForm = () => {
 		setFirstName("");
@@ -18,35 +18,26 @@ const RegisterForm = () => {
 		setPassword("");
 	};
 
-	const PasswordErrorMessage = () => {
-		return (
-			<p className="field-error">Password should have at least 8 characters</p>
-		);
-	};
-
-	const registerUser = async (first_name, last_name, email, password) => {
-		try {
-			const response = await fetch(`${localEndpoint}/register`, {
-				headers: { "Content-Type": "application/json" },
-				method: "POST",
-				body: JSON.stringify({ first_name, last_name, email, password }),
-			});
-			const id = await response.json();
-
-			console.log(id);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	const IsFormValid = () => {
-		return FirstName && validateEmail(Email) && Password.length >= 8;
+		return firstName && validateEmail(email) && password.length >= 8;
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (IsFormValid()) {
-			registerUser(FirstName, LastName, Email, Password);
+			try {
+				const response = await registerUser(
+					firstName,
+					lastName,
+					email,
+					password
+				);
+				console.log(response);
+
+				clearForm();
+			} catch (error) {
+				console.error(error);
+			}
 		}
 		clearForm();
 	};
@@ -57,7 +48,7 @@ const RegisterForm = () => {
 					<h2>Register An Account</h2>
 					<InputField
 						type={"text"}
-						value={FirstName}
+						value={firstName}
 						placeholder={"First name"}
 						label={"First name"}
 						onChange={(e) => {
@@ -66,7 +57,7 @@ const RegisterForm = () => {
 					/>
 					<InputField
 						type={"text"}
-						value={LastName}
+						value={lastName}
 						placeholder={"Last name"}
 						label={"Last name"}
 						onChange={(e) => {
@@ -75,7 +66,7 @@ const RegisterForm = () => {
 					/>
 					<InputField
 						type={"email"}
-						value={Email}
+						value={email}
 						placeholder={"Email"}
 						label={"Email"}
 						onChange={(e) => {
@@ -84,14 +75,13 @@ const RegisterForm = () => {
 					/>
 					<InputField
 						type={"password"}
-						value={Password}
+						value={password}
 						placeholder={"Password"}
 						label={"Password"}
 						onChange={(e) => {
 							setPassword(e.target.value);
 						}}
 					/>
-					{/* {Password.length < 8 ? <PasswordErrorMessage /> : null} */}
 					<button type="submit" disabled={!IsFormValid()}>
 						Create account
 					</button>

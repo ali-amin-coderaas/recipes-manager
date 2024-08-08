@@ -4,7 +4,7 @@ export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 	const token = await localStorage.getItem("jwtToken");
 	try {
 		const response = await fetch(
-			`${localEndpoint}/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`,
+			`${hostedEndpoint}/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`,
 			{
 				method: "GET",
 				headers: {

@@ -2,7 +2,7 @@ import { hostedEndpoint, localEndpoint } from "./Endpoints";
 
 export const loginUser = async (email, password) => {
 	try {
-		const response = await fetch(`${localEndpoint}/login`, {
+		const response = await fetch(`${hostedEndpoint}/login`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -19,6 +19,21 @@ export const loginUser = async (email, password) => {
 		}
 
 		return response.json();
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const registerUser = async (first_name, last_name, email, password) => {
+	try {
+		const response = await fetch(`${hostedEndpoint}/register`, {
+			headers: { "Content-Type": "application/json" },
+			method: "POST",
+			body: JSON.stringify({ first_name, last_name, email, password }),
+		});
+		const id = await response.json();
+
+		return id;
 	} catch (error) {
 		console.error(error);
 	}
