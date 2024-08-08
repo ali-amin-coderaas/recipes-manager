@@ -1,20 +1,36 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUser } from "../api/auth";
 import "../styles/register.css";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";
 
 const LoginForm = () => {
-	const [Email, setEmail] = useState("");
-	const [Password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const navigate = useNavigate();
 
 	const IsFormValid = () => {
-		return validateEmail(Email) && Password.length >= 8;
+		return validateEmail(email) && password.length >= 8;
 	};
 
-	const handleSubmit = (e) => {
+	const clearForm = () => {
+		setPassword("");
+		setEmail("");
+	};
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		alert("logged in successfully");
+		try {
+			const data = await loginUser(email, password);
+			localStorage.setItem("jwtToken", data.token);
+			clearForm();
+			navigate("/");
+		} catch (error) {
+			console.error(error);
+		}
+
 		clearForm();
 	};
 
@@ -25,18 +41,20 @@ const LoginForm = () => {
 					<h2>Login</h2>
 					<InputField
 						type={"email"}
-						value={Email}
+						value={email}
 						placeholder={"Email"}
 						label={"Email"}
+						autoComplete={"email"}
 						onChange={(e) => {
 							setEmail(e.target.value);
 						}}
 					/>
 					<InputField
 						type={"password"}
-						value={Password}
+						value={password}
 						placeholder={"Password"}
 						label={"Password"}
+						autoComplete={"current-password"}
 						onChange={(e) => {
 							setPassword(e.target.value);
 						}}

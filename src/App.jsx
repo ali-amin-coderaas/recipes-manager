@@ -1,47 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Pagination from "./components/Pagination";
 import RecipesTable from "./components/RecipesTable";
 import SearchBox from "./components/SearchBox";
 import Sorting from "./components/Sorting";
+import useRecipes from "./hooks/useRecipes";
 import "./styles/App.css";
 
 function App() {
-	const [Loading, setLoading] = useState(true);
-	const [Recipes, setRecipes] = useState([]);
-	const [CurrentPage, setCurrentPage] = useState(1);
-	const [TotalRecipes, setTotalRecipes] = useState(0);
-	const [SearchQuery, setSearchQuery] = useState("");
-	const [SortOption, setSortOption] = useState({
+	const [currentPage, setCurrentPage] = useState(1);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [sortOption, setSortOption] = useState({
 		sortBy: "",
 		order: "",
 	});
-	const RecipesPerPage = 6;
-	const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
-		try {
-			setLoading(true);
-			const response = await fetch(
-				`http://localhost:8080/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`
-			);
-			const data = await response.json();
-			setRecipes(data.recipes.recipes);
-			setTotalRecipes(data.total);
-			setLoading(false);
-		} catch (error) {
-			console.error(error);
-			setLoading(false);
-		}
-	};
+	const recipesPerPage = 6;
 
-	useEffect(() => {
-		const skip = (CurrentPage - 1) * RecipesPerPage;
-		fetchRecipes(
-			SearchQuery,
-			RecipesPerPage,
-			skip,
-			SortOption.sortBy,
-			SortOption.order
-		);
-	}, [CurrentPage, SortOption, SearchQuery]);
+	const { loading, recipes, totalRecipes } = useRecipes(
+		currentPage,
+		searchQuery,
+		sortOption,
+		recipesPerPage
+	);
 
 	const handlePageChange = (newPage) => {
 		setCurrentPage(newPage);
@@ -65,12 +44,12 @@ function App() {
 					<Sorting onSortChange={handleSortChange} />
 				</div>
 
-				<RecipesTable recipes={Recipes} loading={Loading} />
+				<RecipesTable recipes={recipes} loading={loading} />
 
 				<Pagination
-					currentPage={CurrentPage}
-					totalRecipes={TotalRecipes}
-					recipesPerPage={RecipesPerPage}
+					currentPage={currentPage}
+					totalRecipes={totalRecipes}
+					recipesPerPage={recipesPerPage}
 					onPageChange={handlePageChange}
 				/>
 			</div>
