@@ -1,10 +1,9 @@
-import { hostedEndpoint, localEndpoint } from "./Endpoints";
 
 export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 	const token = localStorage.getItem("jwtToken");
 	try {
 		const response = await fetch(
-			`${hostedEndpoint}/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`,
+			`https://recipes-expressjs-i6wd.onrender.com/recipes?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${sortBy}&order=${order}`,
 			{
 				method: "GET",
 				headers: {
