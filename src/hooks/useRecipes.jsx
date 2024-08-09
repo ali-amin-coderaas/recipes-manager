@@ -23,8 +23,8 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					sortOption.order
 				);
 
-				setRecipes(response.data.recipes.recipes);
-				setTotalRecipes(response.data.total);
+				setRecipes(data.recipes.recipes);
+				setTotalRecipes(data.total);
 			} catch (error) {
 				console.error(error);
 				navigate("/login");
