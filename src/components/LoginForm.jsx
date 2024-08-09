@@ -24,13 +24,16 @@ const LoginForm = () => {
 		e.preventDefault();
 		try {
 			const data = await loginUser(email, password);
-			if (data.token) {
-				localStorage.setItem("jwtToken", data.token);
-				clearForm();
-				navigate("/");
-			} else {
-				console.error("Token not received in response:", data);
-			}
+
+			console.log(data);
+
+			// if (data.token) {
+			// 	localStorage.setItem("jwtToken", data.token);
+			// 	clearForm();
+			// 	navigate("/");
+			// } else {
+			// 	console.error("Token not received in response:", data);
+			// }
 		} catch (error) {
 			console.error(error);
 		}
