@@ -20,6 +20,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					sortOption.sortBy,
 					sortOption.order
 				);
+
 				setRecipes(data.recipes.recipes);
 				setTotalRecipes(data.total);
 			} catch (error) {
