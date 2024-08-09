@@ -1,5 +1,4 @@
 // ./src/hooks/useRecipes.jsx
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipes } from "../api/recipesAPI";
@@ -12,7 +11,6 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		let isMounted = true;
 		const fetchData = async () => {
 			setLoading(true);
 			setHasError(false);
@@ -20,7 +18,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 			try {
 				const skip = (currentPage - 1) * recipesPerPage;
 
-				const data = await fetchRecipes(
+				const response = await fetchRecipes(
 					searchQuery,
 					recipesPerPage,
 					skip,
@@ -28,27 +26,28 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					sortOption.order
 				);
 
-				if (isMounted) {
-					setRecipes(data.recipes.recipes);
-					setTotalRecipes(data.total);
-				}
+				// if (response.status == 401 || response.status == 403) {
+				// 	localStorage.removeItem("jwtToken");
+				// 	navigate("/login");
+				// 	return;
+				// }
+
+				const recipes = response.data.recipes.recipes;
+				setRecipes(recipes);
+				setTotalRecipes(response.data.total);
 			} catch (error) {
 				console.error("Error fetching recipes: ", error);
-				if (isMounted) {
-					setHasError(true);
-					navigate("/login");
-				}
+				setHasError(true);
+				localStorage.removeItem("jwtToken");
+				navigate("/login");
 			} finally {
-				if (isMounted) setLoading(false);
+				setLoading(false);
 			}
 		};
 		if (!hasError) {
 			fetchData();
 		}
-
-		return () => {
-			isMounted = false;
-		};
+		return;
 	}, [currentPage, searchQuery, sortOption, recipesPerPage]);
 
 	return { loading, recipes, totalRecipes };

@@ -11,7 +11,13 @@ export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 				},
 			}
 		);
-		return response.json();
+
+		const data = await response.json();
+
+		return {
+			status: response.status,
+			data,
+		};
 	} catch (error) {
 		console.error("Error fetching recipes:", error);
 		throw error;
