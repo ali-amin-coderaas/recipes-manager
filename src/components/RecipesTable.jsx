@@ -56,10 +56,4 @@ const RecipesTable = ({ recipes, loading }) => {
 	);
 };
 
-RecipesTable.propTypes = {
-	recipes: PropTypes.object,
-	loading: PropTypes.bool,
-	"recipes.map": PropTypes.array,
-};
-
 export default RecipesTable;
