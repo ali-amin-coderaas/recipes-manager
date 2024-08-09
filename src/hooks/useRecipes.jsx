@@ -8,12 +8,14 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 	const [loading, setLoading] = useState(true);
 	const [recipes, setRecipes] = useState([]);
 	const [totalRecipes, setTotalRecipes] = useState(0);
+	const [hasError, setHasError] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
 		let isMounted = true;
 		const fetchData = async () => {
 			setLoading(true);
+			setHasError(false);
 
 			try {
 				const skip = (currentPage - 1) * recipesPerPage;
@@ -31,13 +33,18 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					setTotalRecipes(data.total);
 				}
 			} catch (error) {
-				console.error(error);
-				if (isMounted) navigate("/login");
+				console.error("Error fetching recipes: ", error);
+				if (isMounted) {
+					setHasError(true);
+					navigate("/login");
+				}
 			} finally {
 				if (isMounted) setLoading(false);
 			}
 		};
-		fetchData();
+		if (!hasError) {
+			fetchData();
+		}
 
 		return () => {
 			isMounted = false;
