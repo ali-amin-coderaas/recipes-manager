@@ -26,13 +26,15 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					sortOption.order
 				);
 
-				setRecipes(data.recipes.recipes);
-				setTotalRecipes(data.total);
+				if (isMounted) {
+					setRecipes(data.recipes.recipes);
+					setTotalRecipes(data.total);
+				}
 			} catch (error) {
 				console.error(error);
-				navigate("/login");
+				if (isMounted) navigate("/login");
 			} finally {
-				setLoading(false);
+				if (isMounted) setLoading(false);
 			}
 		};
 		fetchData();
