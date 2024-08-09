@@ -34,6 +34,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 			} catch (error) {
 				console.error(error);
 				navigate("/login");
+				return;
 			} finally {
 				setLoading(false);
 			}
