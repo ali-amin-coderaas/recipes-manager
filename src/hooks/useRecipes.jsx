@@ -15,7 +15,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 			try {
 				const skip = (currentPage - 1) * recipesPerPage;
 
-				const response = await fetchRecipes(
+				const data = await fetchRecipes(
 					searchQuery,
 					recipesPerPage,
 					skip,
