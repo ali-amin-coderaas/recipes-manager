@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import "../styles/register.css";
 
 const InputField = ({ label, ...rest }) => {
@@ -11,6 +11,10 @@ const InputField = ({ label, ...rest }) => {
 			<input {...rest} />
 		</div>
 	);
+};
+
+InputField.propTypes = {
+	label: PropTypes.string,
 };
 
 export default InputField;

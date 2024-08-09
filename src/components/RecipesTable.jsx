@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import "../styles/RecipesTable.css";
 
 const RecipesTable = ({ recipes, loading }) => {
@@ -54,6 +54,12 @@ const RecipesTable = ({ recipes, loading }) => {
 			</tbody>
 		</table>
 	);
+};
+
+RecipesTable.propTypes = {
+	recipes: PropTypes.object,
+	loading: PropTypes.bool,
+	"recipes.map": PropTypes.array,
 };
 
 export default RecipesTable;

@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const Sorting = ({ onSortChange }) => {
 	const handleSortChange = (event) => {
@@ -18,6 +18,10 @@ const Sorting = ({ onSortChange }) => {
 			<option value="name-asc">Name A to Z</option>
 		</select>
 	);
+};
+
+Sorting.propTypes = {
+	onSortChange: PropTypes.func.isRequired,
 };
 
 export default Sorting;
