@@ -24,6 +24,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 				);
 
 				if (response.status != 200) {
+					localStorage.removeItem("jwtToken");
 					navigate("/login");
 					return;
 				}
