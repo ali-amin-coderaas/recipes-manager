@@ -1,3 +1,5 @@
+// ./src/hooks/useRecipes.jsx
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchRecipes } from "../api/recipesAPI";
@@ -9,6 +11,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		let isMounted = true;
 		const fetchData = async () => {
 			setLoading(true);
 
@@ -33,6 +36,10 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 			}
 		};
 		fetchData();
+
+		return () => {
+			isMounted = false;
+		};
 	}, [currentPage, searchQuery, sortOption, recipesPerPage]);
 
 	return { loading, recipes, totalRecipes };
