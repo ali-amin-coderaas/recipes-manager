@@ -23,12 +23,6 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 					sortOption.order
 				);
 
-				if (response.status != 200) {
-					localStorage.removeItem("jwtToken");
-					navigate("/login");
-					return;
-				}
-
 				setRecipes(response.data.recipes.recipes);
 				setTotalRecipes(response.data.total);
 			} catch (error) {

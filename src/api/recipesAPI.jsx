@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 	const token = localStorage.getItem("jwtToken");
 	try {
