@@ -33,6 +33,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 				setTotalRecipes(response.data.total);
 			} catch (error) {
 				console.error(error);
+				navigate("/login");
 			} finally {
 				setLoading(false);
 			}

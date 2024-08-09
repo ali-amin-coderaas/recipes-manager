@@ -12,7 +12,7 @@ export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 				},
 			}
 		);
-		const status = await response.status;
+		const status = response.status;
 		const data = await response.json();
 		return { data, status };
 	} catch (error) {
