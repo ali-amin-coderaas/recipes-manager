@@ -4,7 +4,6 @@ import "../styles/RecipesTable.css";
 const RecipesTable = ({ recipes, loading }) => {
 	return (
 		<table>
-			<caption>Recipes Manager</caption>
 			<thead>
 				<tr>
 					<th>Recipe Name</th>
