@@ -1,48 +1,33 @@
 // src/context/AuthContext.js
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-const initialState = {
-	isLoggedIn: false,
-	token: null,
-};
-
-export const authReducer = (state, action) => {
-	switch (action.type) {
-		case "LOGIN":
-			return {
-				...state,
-				isLoggedIn: true,
-				token: action.payload.token,
-			};
-		case "LOGOUT":
-			return {
-				...state,
-				isLoggedIn: false,
-				token: null,
-			};
-		default:
-			return state;
-	}
-};
-
 export const AuthProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(authReducer, initialState);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	useEffect(() => {
+		const token = localStorage.getItem("jwtToken");
+
+		if (token) {
+			setIsLoggedIn(true);
+		}
+	}, []);
 
 	const login = (token) => {
 		localStorage.setItem("jwtToken", token);
-		dispatch({ type: "LOGIN", payload: { token } });
+		setIsLoggedIn(true);
 	};
 
 	const logout = () => {
 		localStorage.removeItem("jwtToken");
-		dispatch({ type: "LOGOUT" });
+		setIsLoggedIn(false);
 	};
-	console.log("Authentication state:", state);
+
+	console.log("Authentication state:", isLoggedIn);
 
 	return (
-		<AuthContext.Provider value={{ state, login, logout }}>
+		<AuthContext.Provider value={{ isLoggedIn, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

@@ -3,8 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import "../../styles/TitleBar.css";
 
 const Root = () => {
-	const { state, logout } = useAuth();
-	const isLoggedIn = state;
+	const { isLoggedIn, logout } = useAuth();
 	return (
 		<div>
 			<header className="title-bar">
@@ -17,10 +16,10 @@ const Root = () => {
 						{isLoggedIn ? (
 							<>
 								<li>
-									<Link to="profile">Profile</Link>
+									<Link to="/profile">Profile</Link>
 								</li>
 								<li>
-									<Link to="dashboard">Dashboard</Link>
+									<Link to="/dashboard">Dashboard</Link>
 								</li>
 								<li>
 									<button onClick={logout}>Logout</button>
@@ -29,10 +28,10 @@ const Root = () => {
 						) : (
 							<>
 								<li>
-									<Link to="login">Login</Link>
+									<Link to="/login">Login</Link>
 								</li>
 								<li>
-									<Link to="register">Register</Link>
+									<Link to="/register">Register</Link>
 								</li>
 							</>
 						)}

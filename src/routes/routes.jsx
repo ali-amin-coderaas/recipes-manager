@@ -25,7 +25,7 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "register",
+				path: "/register",
 				element: (
 					<PublicRoute>
 						<RegisterForm />
@@ -34,7 +34,7 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "login",
+				path: "/login",
 				element: (
 					<PublicRoute>
 						<LoginForm />
@@ -43,7 +43,7 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "dashboard",
+				path: "/dashboard",
 				element: (
 					<ProtectedRoute>
 						<DashboardView />
@@ -52,7 +52,7 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "profile",
+				path: "/profile",
 				element: (
 					<ProtectedRoute>
 						<ProfileView />
