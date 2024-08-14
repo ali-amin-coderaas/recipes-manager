@@ -1,24 +1,13 @@
+import api from "../api/api.jsx";
+
 export const loginUser = async (email, password) => {
 	try {
-		const response = await fetch(
-			`https://recipes-expressjs-i6wd.onrender.com/login`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					email,
-					password,
-				}),
-			}
+		const response = await api.post(
+			"/login",
+			JSON.stringify({ email, password })
 		);
 
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.error || "Login failed");
-		}
-		return response.json();
+		return response.data;
 	} catch (error) {
 		console.error(error);
 	}
@@ -26,17 +15,13 @@ export const loginUser = async (email, password) => {
 
 export const registerUser = async (first_name, last_name, email, password) => {
 	try {
-		const response = await fetch(
-			`https://recipes-expressjs-i6wd.onrender.com/register`,
-			{
-				headers: { "Content-Type": "application/json" },
-				method: "POST",
-				body: JSON.stringify({ first_name, last_name, email, password }),
-			}
-		);
-		const id = await response.json();
-
-		return id;
+		const response = await api.post("/register", {
+			first_name,
+			last_name,
+			email,
+			password,
+		});
+		return response.data;
 	} catch (error) {
 		console.error(error);
 	}

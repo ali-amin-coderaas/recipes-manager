@@ -56,4 +56,18 @@ const RecipesTable = ({ recipes, loading }) => {
 	);
 };
 
+RecipesTable.propTypes = {
+	recipes: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			name: PropTypes.string.isRequired,
+			ingredients: PropTypes.string.isRequired,
+			instructions: PropTypes.string.isRequired,
+			servings: PropTypes.number.isRequired,
+			caloriesPerServing: PropTypes.number.isRequired,
+		})
+	).isRequired,
+	loading: PropTypes.bool.isRequired,
+};
+
 export default RecipesTable;

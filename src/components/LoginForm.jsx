@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/register.css";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";
@@ -8,7 +9,7 @@ import InputField from "./InputField";
 const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
+	const { login } = useAuth();
 	const navigate = useNavigate();
 
 	const IsFormValid = () => {
@@ -24,8 +25,9 @@ const LoginForm = () => {
 		e.preventDefault();
 		try {
 			const data = await loginUser(email, password);
+
 			if (data.token) {
-				localStorage.setItem("jwtToken", data.token);
+				login(data.token);
 				clearForm();
 				navigate("/");
 			} else {
@@ -69,7 +71,7 @@ const LoginForm = () => {
 					</button>
 					<p>
 						Don&apos;t have an account?{" "}
-						<Link to={"/register"}>
+						<Link to="register">
 							<a>Register</a>
 						</Link>
 					</p>

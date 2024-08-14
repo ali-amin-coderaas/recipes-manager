@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({ children }) => {
-	const token = localStorage.getItem("jwtToken");
+	const { state } = useAuth();
+	const isLoggedIn = state;
 
-	return token ? children : <Navigate to="/login" />;
+	return isLoggedIn ? children : <Navigate to="/login" />;
 };
 
 ProtectedRoute.propTypes = {
