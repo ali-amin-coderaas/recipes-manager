@@ -1,72 +1,76 @@
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import useRecipes from "../hooks/useRecipes";
 import "../styles/RecipesTable.css";
+import SearchBox from "./SearchBox";
+import Sorting from "./Sorting";
 
-const RecipesTable = ({ recipes, loading }) => {
-	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Recipe Name</th>
-					<th>Ingredients</th>
-					<th>Instructions</th>
-					<th>Servings</th>
-					<th>Calories per serving</th>
-				</tr>
-			</thead>
-			<tbody>
-				{!loading ? (
-					recipes.map((recipe) => (
-						<tr key={recipe.id}>
-							<td>{recipe.name}</td>
-							<td> {recipe.ingredients}</td>
-							<td> {recipe.instructions} </td>
-							<td> {recipe.servings} </td>
-							<td> {recipe.caloriesPerServing} </td>
-						</tr>
-					))
-				) : (
-					<tr className="preloader">
-						<td colSpan={5}>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
-								<path
-									fill="none"
-									stroke="#000000"
-									strokeWidth="15"
-									strokeLinecap="round"
-									strokeDasharray="300 385"
-									strokeDashoffset="0"
-									d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z"
-								>
-									<animate
-										attributeName="stroke-dashoffset"
-										calcMode="spline"
-										dur="2"
-										values="685;-685"
-										keySplines="0 0 1 1"
-										repeatCount="indefinite"
-									></animate>
-								</path>
-							</svg>
-						</td>
-					</tr>
-				)}
-			</tbody>
-		</table>
+const RecipesTable = () => {
+	const [currentPage, setCurrentPage] = useState(1);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [sortOption, setSortOption] = useState({
+		sortBy: "",
+		order: "",
+	});
+	const recipesPerPage = 6;
+	const [first, setFirst] = useState(0);
+
+	const { loading, recipes, totalRecipes } = useRecipes(
+		currentPage,
+		searchQuery,
+		sortOption,
+		recipesPerPage
 	);
-};
 
-RecipesTable.propTypes = {
-	recipes: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-			name: PropTypes.string.isRequired,
-			ingredients: PropTypes.string.isRequired,
-			instructions: PropTypes.string.isRequired,
-			servings: PropTypes.number.isRequired,
-			caloriesPerServing: PropTypes.number.isRequired,
-		})
-	).isRequired,
-	loading: PropTypes.bool.isRequired,
+	const handleSortChange = (sortOption) => {
+		setSortOption(sortOption);
+		setCurrentPage(1);
+		setFirst(0);
+	};
+
+	const handleInputChange = (event) => {
+		setSearchQuery(event.target.value);
+		setCurrentPage(1);
+		setFirst(0);
+	};
+
+	const onPageChange = (event) => {
+		setFirst(event.first);
+		setCurrentPage(event.page + 1);
+	};
+
+	const header = (
+		<div className="header">
+			<div c>
+				<span className="title">Recipes</span>
+				<SearchBox onInputChange={handleInputChange} />
+			</div>
+			<Sorting onSortChange={handleSortChange} />
+		</div>
+	);
+
+	return (
+		<DataTable
+			value={recipes}
+			// loading={loading}
+			header={header}
+			paginator
+			rows={recipesPerPage}
+			first={first}
+			totalRecords={totalRecipes}
+			onPage={onPageChange}
+			tableStyle={{ minWidth: "50rem", borderRadius: "2rem" }}
+			scrollable
+		>
+			<Column field="name" header="Recipe Name" />
+			<Column field="ingredients" header="Ingredients" />
+			<Column field="instructions" header="Instructions" />
+			<Column field="servings" header="Servings" />
+			<Column field="caloriesPerServing" header="Calories per serving" />
+		</DataTable>
+	);
 };
 
 export default RecipesTable;

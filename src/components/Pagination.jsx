@@ -1,4 +1,6 @@
+import { Paginator } from "primereact/paginator";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const Pagination = ({
 	currentPage,
@@ -6,60 +8,32 @@ const Pagination = ({
 	recipesPerPage,
 	onPageChange,
 }) => {
-	const handlePreviousPage = () => {
-		if (currentPage > 1) {
-			onPageChange(currentPage - 1);
-		}
-	};
+	const [first, setFirst] = useState((currentPage - 1) * recipesPerPage);
 
-	const handleFirstPage = () => {
-		if (currentPage > 1) {
-			onPageChange(1);
-		}
-	};
-
-	const handleNextPage = () => {
-		if (currentPage * recipesPerPage < totalRecipes) {
-			onPageChange(currentPage + 1);
-		}
-	};
-
-	const handleLastPage = () => {
-		const lastPage = Math.ceil(totalRecipes / recipesPerPage);
-		if (currentPage < lastPage) {
-			onPageChange(lastPage);
-		}
+	const onPageChangeHandler = (event) => {
+		const newPage = event.page + 1;
+		setFirst(event.first);
+		onPageChange(newPage);
 	};
 
 	return (
-		<div className="pagination">
-			<button onClick={handleFirstPage} disabled={currentPage === 1}>
-				{"<<"}
-			</button>
-			<button onClick={handlePreviousPage} disabled={currentPage === 1}>
-				{"<"}
-			</button>
-			<span> {currentPage} </span>
-			<button
-				onClick={handleNextPage}
-				disabled={currentPage * recipesPerPage >= totalRecipes}
-			>
-				{">"}
-			</button>
-			<button
-				onClick={handleLastPage}
-				disabled={currentPage * recipesPerPage >= totalRecipes}
-			>
-				{">>"}
-			</button>
+		<div className="">
+			<Paginator
+				first={first}
+				rows={recipesPerPage}
+				totalRecords={totalRecipes}
+				onPageChange={onPageChangeHandler}
+				rowsPerPageOptions={[recipesPerPage]}
+				template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+			/>
 		</div>
 	);
 };
 
 Pagination.propTypes = {
-	currentPage: PropTypes.number,
-	totalRecipes: PropTypes.number,
-	recipesPerPage: PropTypes.number,
+	currentPage: PropTypes.number.isRequired,
+	totalRecipes: PropTypes.number.isRequired,
+	recipesPerPage: PropTypes.number.isRequired,
 	onPageChange: PropTypes.func.isRequired,
 };
 

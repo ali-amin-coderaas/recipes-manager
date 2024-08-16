@@ -1,46 +1,69 @@
-import { Link, Outlet } from "react-router-dom";
+import { Menubar } from "primereact/menubar";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import "../../styles/TitleBar.css";
 
 const Root = () => {
 	const { isLoggedIn, logout } = useAuth();
+	const navigate = useNavigate();
+	const start = <h1>Recipes Manager</h1>;
+	// const end =
+
+	const menuItems = isLoggedIn
+		? [
+				{
+					label: "Home",
+					command: () => {
+						navigate("/");
+					},
+				},
+				{
+					label: "Profile",
+					command: () => {
+						navigate("/profile");
+					},
+				},
+				{
+					label: "Dashboard",
+					command: () => {
+						navigate("/dashboard");
+					},
+				},
+				{
+					label: "Logout",
+					command: logout,
+					icon: "pi pi-sign-out",
+					style: { color: "red" },
+				},
+		  ]
+		: [
+				{
+					label: "Login",
+					command: () => {
+						navigate("/login");
+					},
+				},
+				{
+					label: "Register",
+					command: () => {
+						navigate("/register");
+					},
+				},
+		  ];
+
 	return (
-		<div>
-			<header className="title-bar">
-				<h1>Recipes Manager</h1>
-				<nav>
-					<ul>
-						{isLoggedIn ? (
-							<>
-								<li>
-									<Link to="/">Home</Link>
-								</li>
-								<li>
-									<Link to="/profile">Profile</Link>
-								</li>
-								<li>
-									<Link to="/dashboard">Dashboard</Link>
-								</li>
-								<li>
-									<a href="#" onClick={logout} style={{ color: "red" }}>
-										Logout
-									</a>
-								</li>
-							</>
-						) : (
-							<>
-								<li>
-									<Link to="/login">Login</Link>
-								</li>
-								<li>
-									<Link to="/register">Register</Link>
-								</li>
-							</>
-						)}
-					</ul>
-				</nav>
+		<div className="root-div">
+			<header>
+				<Menubar model={menuItems} start={start} />
 			</header>
-			<main>
+			<main
+				style={{
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
 				<Outlet />
 			</main>
 		</div>

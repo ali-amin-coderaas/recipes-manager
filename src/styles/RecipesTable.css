@@ -1,33 +1,15 @@
-table {
-	width: 80%;
-	margin: 10px auto;
-}
-
-caption {
-	font-size: 1.6em;
-	font-weight: 400;
-	padding: 10px 0;
-}
-
-thead th {
-	font-weight: 400;
-	background: #8a97a0;
-	color: #fff;
-}
-
-tr {
-	background: #f4f7f8;
-	border-bottom: 1px solid #fff;
-	margin-bottom: 5px;
-}
-
-tr:nth-child(even) {
-	background: #e8eeef;
-}
-
-th,
-td {
-	text-align: left;
-	padding: 20px;
-	font-weight: 300;
+.header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	.div {
+		width: 100%;
+		display: flex;
+		gap: 1rem;
+	}
+	.title {
+		font-weight: bold;
+		font-size: x-large;
+	}
 }
