@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import useRecipes from "../hooks/useRecipes";
 import "../styles/RecipesTable.css";
+import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
 import Sorting from "./Sorting";
 
@@ -36,14 +37,13 @@ const RecipesTable = () => {
 		setFirst(0);
 	};
 
-	const onPageChange = (event) => {
-		setFirst(event.first);
-		setCurrentPage(event.page + 1);
+	const onPageChange = (newPage) => {
+		setCurrentPage(newPage);
 	};
 
 	const header = (
 		<div className="header">
-			<div c>
+			<div className="title-container">
 				<span className="title">Recipes</span>
 				<SearchBox onInputChange={handleInputChange} />
 			</div>
@@ -51,16 +51,25 @@ const RecipesTable = () => {
 		</div>
 	);
 
+	const footer = (
+		<Pagination
+			currentPage={currentPage}
+			totalRecipes={totalRecipes}
+			recipesPerPage={recipesPerPage}
+			onPageChange={onPageChange}
+		/>
+	);
+
 	return (
 		<DataTable
 			value={recipes}
-			// loading={loading}
+			loading={loading}
 			header={header}
-			paginator
-			rows={recipesPerPage}
-			first={first}
-			totalRecords={totalRecipes}
-			onPage={onPageChange}
+			footer={footer}
+			// rows={recipesPerPage}
+			// first={first}
+			// totalRecords={totalRecipes}
+			// onPage={onPageChange}
 			tableStyle={{ minWidth: "50rem", borderRadius: "2rem" }}
 			scrollable
 		>

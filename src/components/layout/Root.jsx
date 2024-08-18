@@ -54,7 +54,11 @@ const Root = () => {
 	return (
 		<div className="root-div">
 			<header>
-				<Menubar model={menuItems} start={start} />
+				<Menubar
+					model={menuItems}
+					start={start}
+					style={{ justifyContent: "space-between" }}
+				/>
 			</header>
 			<main
 				style={{

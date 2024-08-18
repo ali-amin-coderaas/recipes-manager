@@ -3,10 +3,11 @@
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	.div {
-		width: 100%;
+	gap: 1rem;
+	.title-container {
 		display: flex;
-		gap: 1rem;
+		gap: 2rem;
+		align-items: center;
 	}
 	.title {
 		font-weight: bold;
