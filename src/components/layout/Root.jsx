@@ -1,3 +1,4 @@
+import "primeicons/primeicons.css";
 import { Menubar } from "primereact/menubar";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -33,7 +34,7 @@ const Root = () => {
 					label: "Logout",
 					command: logout,
 					icon: "pi pi-sign-out",
-					style: { color: "red" },
+					// style: { color: "red" },
 				},
 		  ]
 		: [

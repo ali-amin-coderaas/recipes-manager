@@ -1,9 +1,8 @@
-import App from "../App";
 import Root from "../components/layout/Root";
-import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import ErrorPage from "../ErrorPage";
 import DashboardView from "../views/DashboardView";
+import LoginView from "../views/LoginView";
 import ProfileView from "../views/ProfileView";
 import RecipesView from "../views/recipesView";
 import ProtectedRoute from "./ProtectedRoute";
@@ -37,7 +36,7 @@ const routes = [
 				path: "/login",
 				element: (
 					<PublicRoute>
-						<LoginForm />
+						<LoginView />
 					</PublicRoute>
 				),
 				errorElement: <ErrorPage />,

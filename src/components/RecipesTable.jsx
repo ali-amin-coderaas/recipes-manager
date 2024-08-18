@@ -1,6 +1,5 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import PropTypes from "prop-types";
 import { useState } from "react";
 import useRecipes from "../hooks/useRecipes";
 import "../styles/RecipesTable.css";

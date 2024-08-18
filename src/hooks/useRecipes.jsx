@@ -26,7 +26,7 @@ const useRecipes = (currentPage, searchQuery, sortOption, recipesPerPage) => {
 				setRecipes(recipes);
 				setTotalRecipes(response.data.total);
 			} catch (error) {
-				console.error("Error fetching recipes: ", error);
+				console.error("Error fetching recipes aaa: ", error);
 			} finally {
 				setLoading(false);
 			}
