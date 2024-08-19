@@ -1,8 +1,8 @@
 import Root from "../components/layout/Root";
 import ErrorPage from "../ErrorPage";
+import AccountView from "../views/AccountView";
 import DashboardView from "../views/DashboardView";
 import LoginView from "../views/LoginView";
-import ProfileView from "../views/ProfileView";
 import RecipesView from "../views/recipesView";
 import RegisterView from "../views/RegisterView";
 import ProtectedRoute from "./ProtectedRoute";
@@ -18,7 +18,7 @@ const routes = [
 				index: true,
 				element: (
 					<ProtectedRoute>
-						<RecipesView />
+						<DashboardView />
 					</ProtectedRoute>
 				),
 				errorElement: <ErrorPage />,
@@ -42,19 +42,19 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "/dashboard",
+				path: "/recipes",
 				element: (
 					<ProtectedRoute>
-						<DashboardView />
+						<RecipesView />
 					</ProtectedRoute>
 				),
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "/profile",
+				path: "/accounts",
 				element: (
 					<ProtectedRoute>
-						<ProfileView />
+						<AccountView />
 					</ProtectedRoute>
 				),
 				errorElement: <ErrorPage />,

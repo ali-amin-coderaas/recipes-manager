@@ -1,33 +1,28 @@
 import "primeicons/primeicons.css";
 import { Menubar } from "primereact/menubar";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { setupInterceptors } from "../../api/api";
 import { useAuth } from "../../hooks/useAuth";
 import "../../styles/TitleBar.css";
 
 const Root = () => {
 	const { isLoggedIn, logout } = useAuth();
 	const navigate = useNavigate();
-	const start = <h1>Recipes Manager</h1>;
-	// const end =
+	const start = <h1>Mall Insights</h1>;
+	setupInterceptors(logout);
 
 	const menuItems = isLoggedIn
 		? [
 				{
-					label: "Home",
+					label: "Dashboard",
 					command: () => {
 						navigate("/");
 					},
 				},
 				{
-					label: "Profile",
+					label: "Recipes",
 					command: () => {
-						navigate("/profile");
-					},
-				},
-				{
-					label: "Dashboard",
-					command: () => {
-						navigate("/dashboard");
+						navigate("/recipes");
 					},
 				},
 				{

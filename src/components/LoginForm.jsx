@@ -1,5 +1,4 @@
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
@@ -29,11 +28,12 @@ export default function LoginForm() {
 		setLoading(true);
 		try {
 			const data = await loginUser(email, password);
+			console.log(data);
 
 			if (data.token) {
 				login(data.token);
-				clearForm();
 				navigate("/");
+				clearForm();
 				setLoading(false);
 			} else {
 				console.error("Token not received in response:", data);

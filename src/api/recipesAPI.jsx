@@ -1,4 +1,4 @@
-import api from "../api/api.jsx";
+import api from "./api";
 
 export const fetchRecipes = async (searchQuery, limit, skip, sortBy, order) => {
 	try {

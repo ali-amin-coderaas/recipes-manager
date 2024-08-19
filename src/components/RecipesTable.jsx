@@ -1,6 +1,8 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setupInterceptors } from "../api/api";
 import useRecipes from "../hooks/useRecipes";
 import "../styles/RecipesTable.css";
 import Pagination from "./Pagination";
@@ -16,6 +18,8 @@ const RecipesTable = () => {
 	});
 	const recipesPerPage = 6;
 	const [first, setFirst] = useState(0);
+	// const navigate = useNavigate();
+	// setupInterceptors(navigate);
 
 	const { loading, recipes, totalRecipes } = useRecipes(
 		currentPage,

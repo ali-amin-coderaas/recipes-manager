@@ -1,6 +1,5 @@
 import { Button } from "primereact/button";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { registerUser } from "../api/auth";
 import { validateEmail } from "../utils/ValidateEmail";
 import InputField from "./InputField";

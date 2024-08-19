@@ -4,7 +4,10 @@ import React, { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(() => {
+		const token = localStorage.getItem("jwtToken");
+		return token !== null;
+	});
 
 	useEffect(() => {
 		const token = localStorage.getItem("jwtToken");
@@ -32,6 +35,3 @@ export const AuthProvider = ({ children }) => {
 		</AuthContext.Provider>
 	);
 };
-
-
-
