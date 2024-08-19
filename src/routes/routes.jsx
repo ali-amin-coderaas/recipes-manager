@@ -1,10 +1,10 @@
 import Root from "../components/layout/Root";
-import RegisterForm from "../components/RegisterForm";
 import ErrorPage from "../ErrorPage";
 import DashboardView from "../views/DashboardView";
 import LoginView from "../views/LoginView";
 import ProfileView from "../views/ProfileView";
 import RecipesView from "../views/recipesView";
+import RegisterView from "../views/RegisterView";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -27,7 +27,7 @@ const routes = [
 				path: "/register",
 				element: (
 					<PublicRoute>
-						<RegisterForm />
+						<RegisterView />
 					</PublicRoute>
 				),
 				errorElement: <ErrorPage />,

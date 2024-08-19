@@ -7,7 +7,7 @@ export default function LoginView() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="card login-view">
+		<div className="card my-8">
 			<div className="flex flex-column md:flex-row gap-0 md:gap-8">
 				<div className="w-full md:w-5">
 					<LoginForm />
@@ -26,7 +26,7 @@ export default function LoginView() {
 				</div>
 				<div className="w-full md:w-5 flex align-items-center justify-content-center py-5">
 					<Button
-						label="Sign Up"
+						label="Register"
 						icon="pi pi-user-plus"
 						severity="success"
 						className="w-10rem"
