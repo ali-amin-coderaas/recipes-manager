@@ -3,7 +3,7 @@ import ErrorPage from "../ErrorPage";
 import AccountView from "../views/AccountView";
 import DashboardView from "../views/DashboardView";
 import LoginView from "../views/LoginView";
-import RecipesView from "../views/recipesView";
+import RecipesView from "../views/RecipesView";
 import RegisterView from "../views/RegisterView";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
