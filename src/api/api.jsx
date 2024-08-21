@@ -1,5 +1,4 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 const api = axios.create({
 	baseURL: "https://recipes-expressjs-i6wd.onrender.com",
@@ -8,22 +7,10 @@ const api = axios.create({
 	},
 });
 
-// const isTokenExpired = (token) => {
-// 	if (!token) return true;
-// 	const decodedToken = jwtDecode(token);
-// 	const currentTime = Date.now() / 1000;
-// 	return decodedToken.exp < currentTime;
-// };
-export const setupInterceptors = (navigate) => {
+export const setupInterceptors = (logout) => {
 	api.interceptors.request.use(
 		(config) => {
 			const token = localStorage.getItem("jwtToken");
-
-			// if (isTokenExpired(token)) {
-			// 	localStorage.removeItem("jwtToken");
-			// 	navigate("/login");
-			// 	return Promise.reject(new Error("Token expired"));
-			// }
 			if (token) {
 				config.headers.authorization = `Bearer ${token}`;
 			}
@@ -42,7 +29,7 @@ export const setupInterceptors = (navigate) => {
 		(error) => {
 			if (error.response?.status === 401 || error.response?.status === 403) {
 				localStorage.removeItem("jwtToken");
-				navigate("/login");
+				logout();
 			}
 			return Promise.reject(error);
 		}

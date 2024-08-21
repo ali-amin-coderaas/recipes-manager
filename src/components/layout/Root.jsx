@@ -1,9 +1,7 @@
-import "primeicons/primeicons.css";
 import { Menubar } from "primereact/menubar";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { setupInterceptors } from "../../api/api";
 import { useAuth } from "../../hooks/useAuth";
-import "../../styles/TitleBar.css";
 
 const Root = () => {
 	const { isLoggedIn, logout } = useAuth();
@@ -17,6 +15,12 @@ const Root = () => {
 					label: "Dashboard",
 					command: () => {
 						navigate("/");
+					},
+				},
+				{
+					label: "Accounts",
+					command: () => {
+						navigate("/accounts");
 					},
 				},
 				{

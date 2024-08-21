@@ -24,24 +24,6 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "/register",
-				element: (
-					<PublicRoute>
-						<RegisterView />
-					</PublicRoute>
-				),
-				errorElement: <ErrorPage />,
-			},
-			{
-				path: "/login",
-				element: (
-					<PublicRoute>
-						<LoginView />
-					</PublicRoute>
-				),
-				errorElement: <ErrorPage />,
-			},
-			{
 				path: "/recipes",
 				element: (
 					<ProtectedRoute>
@@ -62,6 +44,24 @@ const routes = [
 			{
 				path: "*",
 				element: <h1>Page Not Found</h1>,
+				errorElement: <ErrorPage />,
+			},
+			{
+				path: "/register",
+				element: (
+					<PublicRoute>
+						<RegisterView />
+					</PublicRoute>
+				),
+				errorElement: <ErrorPage />,
+			},
+			{
+				path: "/login",
+				element: (
+					<PublicRoute>
+						<LoginView />
+					</PublicRoute>
+				),
 				errorElement: <ErrorPage />,
 			},
 		],

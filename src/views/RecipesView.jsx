@@ -3,7 +3,7 @@ import RecipesTable from "../components/RecipesTable";
 function RecipesView() {
 	return (
 		<>
-			<div className="m-8">
+			<div className="mt-8 mx-4">
 				<RecipesTable />
 			</div>
 		</>
