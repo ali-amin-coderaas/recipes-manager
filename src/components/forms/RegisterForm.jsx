@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { useState } from "react";
-import { registerUser } from "../api/auth";
-import { validateEmail } from "../utils/ValidateEmail";
+import { registerUser } from "../../api/auth";
+import { validateEmail } from "../../utils/ValidateEmail";
 import InputField from "./InputField";
 
 const RegisterForm = () => {

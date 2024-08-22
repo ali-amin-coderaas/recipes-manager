@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { createAccount, getAllAccounts } from "../api/mallAccountsAPI";
+import { createAccount, getAllAccounts, getById } from "../api/mallAccountsAPI";
 
 function useMallAccounts() {
+	const [account, setAccount] = useState({});
 	const [accounts, setAccounts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -13,6 +14,20 @@ function useMallAccounts() {
 			await fetchData();
 		} catch (error) {
 			setError(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const getAccountById = async (id) => {
+		setLoading(true);
+		try {
+			const response = await getById(id);
+			return response;
+		} catch (error) {
+			setError(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -32,7 +47,7 @@ function useMallAccounts() {
 		fetchData();
 	}, []);
 
-	return { accounts, loading, error, addAccount };
+	return { accounts, loading, error, addAccount, getAccountById };
 }
 
 export default useMallAccounts;

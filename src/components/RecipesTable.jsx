@@ -1,10 +1,7 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { setupInterceptors } from "../api/api";
 import useRecipes from "../hooks/useRecipes";
-import "../styles/RecipesTable.css";
 import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
 import Sorting from "./Sorting";
@@ -17,9 +14,6 @@ const RecipesTable = () => {
 		order: "",
 	});
 	const recipesPerPage = 6;
-	const [first, setFirst] = useState(0);
-	// const navigate = useNavigate();
-	// setupInterceptors(navigate);
 
 	const { loading, recipes, totalRecipes } = useRecipes(
 		currentPage,
@@ -31,13 +25,11 @@ const RecipesTable = () => {
 	const handleSortChange = (sortOption) => {
 		setSortOption(sortOption);
 		setCurrentPage(1);
-		setFirst(0);
 	};
 
 	const handleInputChange = (event) => {
 		setSearchQuery(event.target.value);
 		setCurrentPage(1);
-		setFirst(0);
 	};
 
 	const onPageChange = (newPage) => {
@@ -45,11 +37,9 @@ const RecipesTable = () => {
 	};
 
 	const header = (
-		<div className="header">
-			<div className="title-container">
-				<span className="title">Recipes</span>
-				<SearchBox onInputChange={handleInputChange} />
-			</div>
+		<div className="flex justify-content-between align-items-center flex-wrap gap-2 md:gap-0">
+			<span className="text-900 font-bold text-xl">Recipes</span>
+			<SearchBox onInputChange={handleInputChange} />
 			<Sorting onSortChange={handleSortChange} />
 		</div>
 	);
@@ -64,24 +54,22 @@ const RecipesTable = () => {
 	);
 
 	return (
-		<DataTable
-			value={recipes}
-			loading={loading}
-			header={header}
-			footer={footer}
-			// rows={recipesPerPage}
-			// first={first}
-			// totalRecords={totalRecipes}
-			// onPage={onPageChange}
-			tableStyle={{ minWidth: "50rem", borderRadius: "2rem" }}
-			scrollable
-		>
-			<Column field="name" header="Recipe Name" />
-			<Column field="ingredients" header="Ingredients" />
-			<Column field="instructions" header="Instructions" />
-			<Column field="servings" header="Servings" />
-			<Column field="caloriesPerServing" header="Calories per serving" />
-		</DataTable>
+		<div className="">
+			<DataTable
+				value={recipes}
+				loading={loading}
+				header={header}
+				footer={footer}
+				scrollable
+				scrollHeight="600px"
+			>
+				<Column field="name" header="Recipe Name" />
+				<Column field="ingredients" header="Ingredients" />
+				<Column field="instructions" header="Instructions" />
+				<Column field="servings" header="Servings" />
+				<Column field="caloriesPerServing" header="Calories per serving" />
+			</DataTable>
+		</div>
 	);
 };
 

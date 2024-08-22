@@ -9,10 +9,8 @@ import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import React, { useRef, useState } from "react";
-import {
-	createAccount as apiCreateAccount,
-	getAccountById,
-} from "../api/mallAccountsAPI";
+import { Link } from "react-router-dom";
+import { createAccount as apiCreateAccount } from "../api/mallAccountsAPI";
 import useMallAccounts from "../hooks/useMallAccounts";
 
 const MallAccounts = () => {
@@ -138,6 +136,21 @@ const MallAccounts = () => {
 		);
 	};
 
+	const rightToolbarTemplate = () => {
+		return (
+			<div className="w-fit">
+				<IconField iconPosition="left">
+					<InputIcon className="pi pi-search" />
+					<InputText
+						type="search"
+						onInput={(e) => setGlobalFilter(e.target.value)}
+						placeholder="Search..."
+					/>
+				</IconField>
+			</div>
+		);
+	};
+
 	const accountDialogFooter = (
 		<>
 			<Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
@@ -204,11 +217,23 @@ const MallAccounts = () => {
 		);
 	};
 
+	const nameBodyTemplate = (rowData) => {
+		return (
+			<Link to={`/accounts/${rowData.id}`} className="text-primary">
+				{rowData.name}
+			</Link>
+		);
+	};
+
 	return (
 		<div>
 			<Toast ref={toast} />
 			<div className="card">
-				<Toolbar className="mb-4" left={leftToolbarTemplate} />
+				<Toolbar
+					className="mb-4"
+					start={leftToolbarTemplate}
+					end={rightToolbarTemplate}
+				/>
 				<DataTable
 					scrollable
 					scrollHeight="450px"
@@ -222,15 +247,14 @@ const MallAccounts = () => {
 					rowsPerPageOptions={[5, 10, 25]}
 					paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
 					currentPageReportTemplate="Showing {first} to {last} of {totalRecords} accounts"
-					header={header}
 					loading={loading}
 				>
 					<Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
 					<Column field="id" header="ID" />
-					<Column field="name" header="Name" />
+					<Column field="name" header="Name" body={nameBodyTemplate} />
 					<Column field="shopCount" header=" # of Shops" />
 					<Column field="createdAt" header="Created On" />
-					<Column body={actionBodyTemplate} exportable={false}></Column>
+					{/* <Column body={actionBodyTemplate} exportable={false}></Column> */}
 				</DataTable>
 			</div>
 

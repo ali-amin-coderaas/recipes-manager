@@ -9,7 +9,7 @@ export const getAllAccounts = async () => {
 	}
 };
 
-export const getAccountById = async (id) => {
+export const getById = async (id) => {
 	try {
 		const response = await api.get(`/accounts/${id}`);
 		return response.data;

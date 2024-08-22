@@ -3,7 +3,7 @@ import MallAccounts from "../components/MallAccounts";
 
 const DashboardView = () => {
 	return (
-		<div className="w-10 mx-8">
+		<div className="mx-4 md:mx-8">
 			<h1>Available Accounts</h1>
 
 			<MallAccounts />

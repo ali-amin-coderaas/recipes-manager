@@ -1,9 +1,9 @@
 import { Button } from "primereact/button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/auth";
-import { useAuth } from "../hooks/useAuth";
-import { validateEmail } from "../utils/ValidateEmail";
+import { loginUser } from "../../api/auth";
+import { useAuth } from "../../hooks/useAuth";
+import { validateEmail } from "../../utils/ValidateEmail";
 import InputField from "./InputField";
 
 export default function LoginForm() {

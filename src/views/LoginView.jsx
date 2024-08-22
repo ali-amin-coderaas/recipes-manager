@@ -1,13 +1,13 @@
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/forms/LoginForm";
 
 export default function LoginView() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="card my-8">
+		<div className="card my-8 flex justify-content-center">
 			<div className="flex flex-column md:flex-row gap-0 md:gap-8">
 				<div className="w-full md:w-5">
 					<LoginForm />

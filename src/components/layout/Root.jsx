@@ -60,14 +60,7 @@ const Root = () => {
 					style={{ justifyContent: "space-between" }}
 				/>
 			</header>
-			<main
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center",
-					justifyContent: "center",
-				}}
-			>
+			<main>
 				<Outlet />
 			</main>
 		</div>

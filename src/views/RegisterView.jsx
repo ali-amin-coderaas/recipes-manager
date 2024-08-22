@@ -2,13 +2,13 @@ import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/forms/RegisterForm";
 
 const RegisterView = () => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="card my-8">
+		<div className="card my-8 flex justify-content-center">
 			<div className="flex flex-column md:flex-row gap-0 md:gap-8">
 				<div className="w-full md:w-5">
 					<RegisterForm />
