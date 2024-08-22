@@ -10,9 +10,10 @@ import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { createAccount as apiCreateAccount } from "../api/mallAccountsAPI";
 import useMallAccounts from "../hooks/useMallAccounts";
+import { formatTimeStamp } from "../utils/FormatTimeStamp";
 
 const MallAccounts = () => {
 	const emptyAccount = {
@@ -22,17 +23,16 @@ const MallAccounts = () => {
 	const { accounts, loading, error, addAccount } = useMallAccounts();
 	const [account, setAccount] = useState({});
 	const [accountDialog, setAccountDialog] = useState(false);
-	const [deleteAccountDialog, setDeleteAccountDialog] = useState(false);
-	const [deleteAccountsDialog, setDeleteAccountsDialog] = useState(false);
 	const [selectedAccounts, setSelectedAccounts] = useState(null);
 	const [submitted, setSubmitted] = useState(false);
 	const [globalFilter, setGlobalFilter] = useState(null);
 	const toast = useRef(null);
 	const skeletonRows = 10;
+	const { id } = useParams();
 
 	const dt = useRef(null);
 	accounts.forEach((account) => {
-		account.createdAt = new Date(account.createdAt).toLocaleDateString();
+		account.createdAt = formatTimeStamp(account.createdAt);
 	});
 
 	const openNew = () => {
@@ -43,14 +43,6 @@ const MallAccounts = () => {
 	const hideDialog = () => {
 		setSubmitted(false);
 		setAccountDialog(false);
-	};
-
-	const hideDeleteAccountDialog = () => {
-		setDeleteAccountDialog(false);
-	};
-
-	const hideDeleteAccountsDialog = () => {
-		setDeleteAccountsDialog(false);
 	};
 
 	const createAccount = async () => {
@@ -80,10 +72,6 @@ const MallAccounts = () => {
 			}
 		}
 	};
-
-	const deleteAccount = () => {};
-	const deleteSelectedAccounts = () => {};
-	const confirmDeleteSelected = () => {};
 
 	const editAccount = (account) => {
 		// setAccount({ ...account });
@@ -125,14 +113,8 @@ const MallAccounts = () => {
 					label="New"
 					icon="pi pi-plus"
 					severity="success"
+					rounded
 					onClick={openNew}
-				/>
-				<Button
-					label="Delete"
-					icon="pi pi-trash"
-					severity="danger"
-					onClick={confirmDeleteSelected}
-					disabled={!selectedAccounts || !selectedAccounts.length}
 				/>
 			</div>
 		);
@@ -165,60 +147,6 @@ const MallAccounts = () => {
 		</>
 	);
 
-	const deleteAccountDialogFooter = (
-		<>
-			<Button
-				label="Cancel"
-				icon="pi pi-times"
-				outlined
-				onClick={hideDeleteAccountDialog}
-			/>
-			<Button
-				label="Delete"
-				icon="pi pi-trash"
-				severity="danger"
-				onClick={deleteAccount}
-			/>
-		</>
-	);
-
-	const deleteAccountsDialogFooter = (
-		<>
-			<Button
-				label="Cancel"
-				icon="pi pi-times"
-				outlined
-				onClick={hideDeleteAccountsDialog}
-			/>
-			<Button
-				label="Delete"
-				icon="pi pi-trash"
-				severity="danger"
-				onClick={deleteSelectedAccounts}
-			/>
-		</>
-	);
-
-	const actionBodyTemplate = (rowData) => {
-		return (
-			<div className="flex flex-wrap gap-2">
-				<Button
-					icon="pi pi-pencil"
-					rounded
-					outlined
-					onClick={() => editAccount(rowData)}
-				/>
-				<Button
-					icon="pi pi-trash"
-					rounded
-					outlined
-					severity="danger"
-					onClick={() => confirmDeleteProduct(rowData)}
-				/>
-			</div>
-		);
-	};
-
 	const nameBodyTemplate = (rowData) => {
 		return (
 			<Link to={`/accounts/${rowData.id}`} className="text-primary">
@@ -227,9 +155,7 @@ const MallAccounts = () => {
 		);
 	};
 
-	const skeletonBodyTemplate = () => {
-		return <Skeleton width="100%"></Skeleton>;
-	};
+	const skeletonBodyTemplate = <Skeleton width="100%" />;
 
 	return (
 		<div>
@@ -259,22 +185,20 @@ const MallAccounts = () => {
 						field="id"
 						header="ID"
 						body={
-							loading
-								? () => <Skeleton width="100%"></Skeleton>
-								: (rowData) => rowData.id
+							loading ? () => skeletonBodyTemplate : (rowData) => rowData.id
 						}
 					/>
 					<Column
 						field="name"
 						header="Name"
-						body={loading ? () => <Skeleton width="100%" /> : nameBodyTemplate}
+						body={loading ? () => skeletonBodyTemplate : nameBodyTemplate}
 					/>
 					<Column
 						field="shopCount"
 						header="# of Shops"
 						body={
 							loading
-								? () => <Skeleton width="100%" />
+								? () => skeletonBodyTemplate
 								: (rowData) => rowData.shopCount
 						}
 					/>
@@ -283,7 +207,7 @@ const MallAccounts = () => {
 						header="Created On"
 						body={
 							loading
-								? () => <Skeleton width="100%" />
+								? () => skeletonBodyTemplate
 								: (rowData) => rowData.createdAt
 						}
 					/>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { createAccount, getAllAccounts, getById } from "../api/mallAccountsAPI";
+import {
+	createAccount,
+	deleteAccount,
+	getAllAccounts,
+	getById,
+} from "../api/mallAccountsAPI";
 
 function useMallAccounts() {
 	const [account, setAccount] = useState({});
@@ -31,6 +36,15 @@ function useMallAccounts() {
 		}
 	};
 
+	const deleteAccountById = async (id) => {
+		try {
+			await deleteAccount(id);
+			// await fetchData();
+		} catch (error) {
+			setError(error);
+		}
+	};
+
 	const fetchData = async () => {
 		setLoading(true);
 		try {
@@ -47,7 +61,14 @@ function useMallAccounts() {
 		fetchData();
 	}, []);
 
-	return { accounts, loading, error, addAccount, getAccountById };
+	return {
+		accounts,
+		loading,
+		error,
+		addAccount,
+		getAccountById,
+		deleteAccountById,
+	};
 }
 
 export default useMallAccounts;

@@ -16,16 +16,17 @@ CREATE TABLE
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL createdAt DATETIME,
-        updatedAt DATETIME
+        password VARCHAR(255) NOT NULL,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
 CREATE TABLE
     accounts (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255),
         isActive BOOLEAN,
-        createdAt DATETIME,
-        updatedAt DATETIME
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 CREATE TABLE
@@ -39,7 +40,7 @@ CREATE TABLE
         internalAddress VARCHAR(255),
         taxInformation VARCHAR(255),
         isActive BOOLEAN,
-        createdAt DATETIME,
-        updatedAt DATETIME,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (accountId) REFERENCES account (id)
     );

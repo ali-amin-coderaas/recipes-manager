@@ -18,6 +18,14 @@ export const getById = async (id) => {
 	}
 };
 
+export const deleteAccount = async (id) => {
+	try {
+		await api.delete(`/accounts/${id}`);
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 export const createAccount = async (data) => {
 	try {
 		const response = await api.post(`/accounts/`, data);
