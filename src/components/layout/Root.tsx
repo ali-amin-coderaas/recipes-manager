@@ -1,4 +1,5 @@
 import { Menubar } from "primereact/menubar";
+import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setupInterceptors } from "../../api/api";
 import { useAuth } from "../../hooks/useAuth";
@@ -33,7 +34,7 @@ const Root = () => {
 					label: "Logout",
 					command: logout,
 					icon: "pi pi-sign-out",
-					// style: { color: "red" },
+					style: { color: "red" },
 				},
 		  ]
 		: [

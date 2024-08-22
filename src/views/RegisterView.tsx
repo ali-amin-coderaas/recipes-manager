@@ -4,7 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../components/forms/RegisterForm";
 
-const RegisterView = () => {
+const RegisterView: React.FC = () => {
 	const navigate = useNavigate();
 
 	return (

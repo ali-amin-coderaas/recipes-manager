@@ -1,23 +1,42 @@
-// src/context/AuthContext.js
-import React, { createContext, useEffect, useState } from "react";
+// src/context/AuthContext.tsx
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-export const AuthContext = createContext();
+// Define types for the context value and provider props
+interface AuthContextType {
+	isLoggedIn: boolean;
+	login: (token: string) => void;
+	logout: () => void;
+}
 
-export const AuthProvider = ({ children }) => {
-	const [isLoggedIn, setIsLoggedIn] = useState(() => {
+interface AuthProviderProps {
+	children: ReactNode;
+}
+
+// Create context with a default value
+const defaultAuthContextValue: AuthContextType = {
+	isLoggedIn: false,
+	login: () => {},
+	logout: () => {},
+};
+
+export const AuthContext = createContext<AuthContextType>(
+	defaultAuthContextValue
+);
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
 		const token = localStorage.getItem("jwtToken");
 		return token !== null;
 	});
 
 	useEffect(() => {
 		const token = localStorage.getItem("jwtToken");
-
 		if (token) {
 			setIsLoggedIn(true);
 		}
 	}, []);
 
-	const login = (token) => {
+	const login = (token: string) => {
 		localStorage.setItem("jwtToken", token);
 		setIsLoggedIn(true);
 	};
