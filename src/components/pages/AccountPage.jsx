@@ -3,6 +3,9 @@ import { Card } from "primereact/card";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useMallAccounts from "../../hooks/useMallAccounts";
+
+import { Skeleton } from "primereact/skeleton";
+
 const AccountPage = () => {
 	const { loading, error, getAccountById } = useMallAccounts();
 	const [account, setAccount] = useState({});
@@ -15,7 +18,7 @@ const AccountPage = () => {
 				const account = await getAccountById(id);
 				setAccount(account);
 			} catch (error) {
-				setError(error);
+				console.error(error);
 			}
 		};
 		fetchAccount();
@@ -39,9 +42,15 @@ const AccountPage = () => {
 		</div>
 	);
 
+	const title = loading ? (
+		<Skeleton width="10rem"></Skeleton>
+	) : (
+		<div>{account.name}</div>
+	);
+
 	return (
 		<div>
-			<Card title={account.name} footer={footer}></Card>
+			<Card title={title} footer={footer}></Card>
 		</div>
 	);
 };

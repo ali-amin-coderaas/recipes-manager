@@ -5,6 +5,7 @@ import { Dialog } from "primereact/dialog";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import { Skeleton } from "primereact/skeleton";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
@@ -27,6 +28,7 @@ const MallAccounts = () => {
 	const [submitted, setSubmitted] = useState(false);
 	const [globalFilter, setGlobalFilter] = useState(null);
 	const toast = useRef(null);
+	const skeletonRows = 10;
 
 	const dt = useRef(null);
 	accounts.forEach((account) => {
@@ -225,6 +227,10 @@ const MallAccounts = () => {
 		);
 	};
 
+	const skeletonBodyTemplate = () => {
+		return <Skeleton width="100%"></Skeleton>;
+	};
+
 	return (
 		<div>
 			<Toast ref={toast} />
@@ -238,23 +244,49 @@ const MallAccounts = () => {
 					scrollable
 					scrollHeight="450px"
 					ref={dt}
-					value={accounts}
+					value={loading ? [null] : accounts}
 					selection={selectedAccounts}
 					onSelectionChange={(e) => setSelectedAccounts(e.value)}
 					dataKey="id"
 					paginator
-					rows={10}
+					rows={100}
 					rowsPerPageOptions={[5, 10, 25]}
 					paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
 					currentPageReportTemplate="Showing {first} to {last} of {totalRecords} accounts"
-					loading={loading}
 				>
 					<Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-					<Column field="id" header="ID" />
-					<Column field="name" header="Name" body={nameBodyTemplate} />
-					<Column field="shopCount" header=" # of Shops" />
-					<Column field="createdAt" header="Created On" />
-					{/* <Column body={actionBodyTemplate} exportable={false}></Column> */}
+					<Column
+						field="id"
+						header="ID"
+						body={
+							loading
+								? () => <Skeleton width="100%"></Skeleton>
+								: (rowData) => rowData.id
+						}
+					/>
+					<Column
+						field="name"
+						header="Name"
+						body={loading ? () => <Skeleton width="100%" /> : nameBodyTemplate}
+					/>
+					<Column
+						field="shopCount"
+						header="# of Shops"
+						body={
+							loading
+								? () => <Skeleton width="100%" />
+								: (rowData) => rowData.shopCount
+						}
+					/>
+					<Column
+						field="createdAt"
+						header="Created On"
+						body={
+							loading
+								? () => <Skeleton width="100%" />
+								: (rowData) => rowData.createdAt
+						}
+					/>
 				</DataTable>
 			</div>
 
