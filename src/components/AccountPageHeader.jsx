@@ -4,7 +4,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
-import useMallAccounts from "../hooks/useMallAccounts";
+import useMallAccounts from "../hooks/useAccounts";
 import SkeletonFloatLabel from "./SkeletonFloatLabel";
 
 const AccountPageHeader = ({ loading, account, disabled = true }) => {

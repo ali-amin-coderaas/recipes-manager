@@ -5,11 +5,12 @@ import { Paginator } from "primereact/paginator";
 import { classNames } from "primereact/utils";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import useMallAccounts from "../hooks/useMallAccounts";
+import { useToast } from "../context/ToastContext";
+import useAccounts from "../hooks/useAccounts";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
 import DataTableComponent from "./DataTableComponent";
 
-const MallAccounts = () => {
+const AccountsList = () => {
 	const {
 		accounts,
 		loading,
@@ -18,12 +19,13 @@ const MallAccounts = () => {
 		pageSize,
 		totalItems,
 		setCurrentPage,
-	} = useMallAccounts();
+	} = useAccounts();
 	const [account, setAccount] = useState({});
 	const [accountDialog, setAccountDialog] = useState(false);
 	const [selectedAccounts, setSelectedAccounts] = useState(null);
 	const [submitted, setSubmitted] = useState(false);
 	const [globalFilter, setGlobalFilter] = useState(null);
+	const { showToast } = useToast();
 
 	accounts.forEach((account) => {
 		account.createdAt = formatTimeStamp(account.createdAt);
@@ -42,12 +44,11 @@ const MallAccounts = () => {
 	const createAccount = async () => {
 		setSubmitted(true);
 		let accountData = account.name.trim();
-
 		if (accountData) {
 			try {
 				await addAccount(accountData);
-
 				hideDialog();
+				showToast("success", "Account created", "Account created successfully");
 			} catch (error) {
 				throw error;
 			}
@@ -55,12 +56,8 @@ const MallAccounts = () => {
 	};
 
 	const onInputChange = (e, name) => {
-		const val = (e.target && e.target.value) || "";
-		let _account = { ...account };
-
-		_account[`${name}`] = val;
-
-		setAccount(_account);
+		const val = e.target?.value?.trim() || "";
+		setAccount((prevAccount) => ({ ...prevAccount, [name]: val }));
 	};
 
 	const handlePageChange = (event) => {
@@ -172,4 +169,4 @@ const MallAccounts = () => {
 	);
 };
 
-export default MallAccounts;
+export default AccountsList;

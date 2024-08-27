@@ -7,7 +7,7 @@ import {
 	softDeleteAccount,
 } from "../api/mallAccountsAPI";
 
-function useMallAccounts() {
+function useAccounts() {
 	const [accounts, setAccounts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -89,4 +89,4 @@ function useMallAccounts() {
 	};
 }
 
-export default useMallAccounts;
+export default useAccounts;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useMallAccounts from "../../hooks/useMallAccounts";
+import useMallAccounts from "../../hooks/useAccounts";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import AccountPageHeader from "../AccountPageHeader";
