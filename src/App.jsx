@@ -4,6 +4,7 @@ import "primereact/resources/themes/lara-light-purple/theme.css";
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import { ToastProvider } from "./context/ToastContext.jsx";
 import routes from "./routes/routes.jsx";
 import "./styles/reset.css";
 import "/node_modules/primeflex/primeflex.css";
@@ -13,9 +14,14 @@ const router = createBrowserRouter(routes);
 function App() {
 	return (
 		<PrimeReactProvider>
-			<AuthProvider>
-				<RouterProvider router={router} future={{ v7_startTransition: true }} />
-			</AuthProvider>
+			<ToastProvider>
+				<AuthProvider>
+					<RouterProvider
+						router={router}
+						future={{ v7_startTransition: true }}
+					/>
+				</AuthProvider>
+			</ToastProvider>
 		</PrimeReactProvider>
 	);
 }

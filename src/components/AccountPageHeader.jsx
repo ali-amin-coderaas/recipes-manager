@@ -1,9 +1,9 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { Toast } from "primereact/toast";
-import React, { useRef } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
 import useMallAccounts from "../hooks/useMallAccounts";
 import SkeletonFloatLabel from "./SkeletonFloatLabel";
 
@@ -12,19 +12,12 @@ const AccountPageHeader = ({ loading, account, disabled = true }) => {
 	const { id } = useParams();
 	const { deleteAccountById } = useMallAccounts();
 
+	const { showToast } = useToast();
+
 	const deleteAccount = async () => {
 		try {
 			await deleteAccountById(id);
-			navigate("/accounts", {
-				state: {
-					toast: {
-						severity: "success",
-						summary: "Successful",
-						detail: "Account Deleted",
-						life: 3000,
-					},
-				},
-			});
+			navigate("/accounts");
 		} catch (error) {
 			throw error;
 		}
@@ -37,6 +30,7 @@ const AccountPageHeader = ({ loading, account, disabled = true }) => {
 			defaultFocus: "reject",
 			accept: () => {
 				deleteAccount();
+				showToast("success", "Account deleted", "Account deleted successfully");
 			},
 		});
 	};

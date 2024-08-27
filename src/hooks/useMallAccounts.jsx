@@ -13,7 +13,7 @@ function useMallAccounts() {
 	const [error, setError] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalItems, setTotalItems] = useState(0);
-	const [pageSize, setPageSize] = useState(10);
+	const [pageSize, setPageSize] = useState(5);
 
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -53,7 +53,7 @@ function useMallAccounts() {
 		}
 	};
 
-	const fetchData = async (page = currentPage, pageSize = 5) => {
+	const fetchData = async (page = currentPage, pageSize) => {
 		setLoading(true);
 
 		try {
@@ -73,7 +73,7 @@ function useMallAccounts() {
 
 	useEffect(() => {
 		fetchData(currentPage, pageSize);
-	}, [currentPage, pageSize]);
+	}, [currentPage, pageSize, searchParams]);
 
 	return {
 		accounts,

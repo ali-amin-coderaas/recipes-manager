@@ -5,9 +5,7 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Skeleton } from "primereact/skeleton";
-import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
-import Pagination from "./Pagination";
 
 const DataTableComponent = ({
 	data,
@@ -24,7 +22,6 @@ const DataTableComponent = ({
 	...rest
 }) => {
 	const dt = useRef(null);
-	const toast = useRef(null);
 
 	const skeletonBodyTemplate = <Skeleton width="100%" />;
 
@@ -50,7 +47,6 @@ const DataTableComponent = ({
 
 	return (
 		<div>
-			<Toast ref={toast} />
 			<div className="card">
 				<DataTable
 					scrollable

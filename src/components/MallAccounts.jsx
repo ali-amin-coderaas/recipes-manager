@@ -115,6 +115,7 @@ const MallAccounts = () => {
 			totalRecords={totalItems}
 			onPageChange={handlePageChange}
 			pageLinkSize={3}
+			rowsPerPageOptions={[5, 10, 25, 50]}
 			currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Accounts"
 			template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
 		/>
