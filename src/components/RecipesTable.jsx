@@ -47,8 +47,8 @@ const RecipesTable = () => {
 	const footer = (
 		<Pagination
 			currentPage={currentPage}
-			totalRecipes={totalRecipes}
-			recipesPerPage={recipesPerPage}
+			totalItems={totalRecipes}
+			pageSize={recipesPerPage}
 			onPageChange={onPageChange}
 		/>
 	);

@@ -1,14 +1,22 @@
 import api from "./api";
 
-export const getAllAccounts = async () => {
+export const getAllAccounts = async (page, pageSize) => {
 	try {
-		const response = await api.get("/accounts");
-		return response.data;
+		const response = await api.get(`/accounts/?page=${page}&?pageSize=${pageSize}`);
+		return {
+			data: response.data.data.items,
+			pagination: {
+				totalItems: response.data.data.pagination.totalItems,
+				currentPage: parseInt(response.data.data.pagination.currentPage, 10),
+				pageSize: parseInt(response.data.data.pagination.pageSize, 10),
+				totalPages: response.data.data.pagination.totalPages,
+			},
+		};
 	} catch (error) {
 		console.error(error);
+		throw error;
 	}
 };
-
 export const getById = async (id) => {
 	try {
 		const response = await api.get(`/accounts/${id}`);
@@ -18,7 +26,7 @@ export const getById = async (id) => {
 	}
 };
 
-export const deleteAccount = async (id) => {
+export const softDeleteAccount = async (id) => {
 	try {
 		await api.delete(`/accounts/${id}`);
 	} catch (error) {

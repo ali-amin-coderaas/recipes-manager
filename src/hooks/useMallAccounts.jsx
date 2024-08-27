@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
 	createAccount,
-	deleteAccount,
 	getAllAccounts,
 	getById,
+	softDeleteAccount,
 } from "../api/mallAccountsAPI";
 
 function useMallAccounts() {
-	const [account, setAccount] = useState({});
 	const [accounts, setAccounts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [totalItems, setTotalItems] = useState(0);
+	const [pageSize, setPageSize] = useState(10);
+
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const updateURLParams = (page, pageSize) => {
+		setSearchParams({ page, pageSize });
+	};
 
 	const addAccount = async (name) => {
 		const newAccount = { name: name };
 		try {
 			await createAccount(newAccount);
-			await fetchData();
+			await fetchData(currentPage);
 		} catch (error) {
 			setError(error);
 		} finally {
@@ -38,18 +47,23 @@ function useMallAccounts() {
 
 	const deleteAccountById = async (id) => {
 		try {
-			await deleteAccount(id);
-			// await fetchData();
+			await softDeleteAccount(id);
 		} catch (error) {
 			setError(error);
 		}
 	};
 
-	const fetchData = async () => {
+	const fetchData = async (page = currentPage, pageSize = 5) => {
 		setLoading(true);
+
 		try {
-			const data = await getAllAccounts();
-			setAccounts(data);
+			const data = await getAllAccounts(page, pageSize);
+
+			setAccounts(data.data || []);
+			setCurrentPage(data.pagination.currentPage || currentPage);
+			setTotalItems(data.pagination.totalItems || totalItems);
+			setPageSize(data.pagination.pageSize || pageSize);
+			updateURLParams(data.pagination.currentPage, data.pagination.pageSize);
 		} catch (error) {
 			setError(error);
 		} finally {
@@ -58,8 +72,8 @@ function useMallAccounts() {
 	};
 
 	useEffect(() => {
-		fetchData();
-	}, []);
+		fetchData(currentPage, pageSize);
+	}, [currentPage, pageSize]);
 
 	return {
 		accounts,
@@ -68,6 +82,10 @@ function useMallAccounts() {
 		addAccount,
 		getAccountById,
 		deleteAccountById,
+		currentPage,
+		totalItems,
+		pageSize,
+		setCurrentPage,
 	};
 }
 
