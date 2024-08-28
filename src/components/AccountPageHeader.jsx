@@ -7,7 +7,7 @@ import { useToast } from "../context/ToastContext";
 import useMallAccounts from "../hooks/useAccounts";
 import SkeletonFloatLabel from "./SkeletonFloatLabel";
 
-const AccountPageHeader = ({ loading, account, disabled = true }) => {
+const AccountPageHeader = ({ loading, account, disabled = true, ...rest }) => {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const { deleteAccountById } = useMallAccounts();
@@ -63,7 +63,7 @@ const AccountPageHeader = ({ loading, account, disabled = true }) => {
 	);
 
 	return (
-		<div>
+		<div {...rest}>
 			<Card title={title} className="pt-4"></Card>
 			<ConfirmDialog />
 		</div>

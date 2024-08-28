@@ -4,6 +4,7 @@ import useMallAccounts from "../../hooks/useAccounts";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import AccountPageHeader from "../AccountPageHeader";
+import ShopsList from "../ShopsList";
 
 const AccountPage = () => {
 	const { loading, getAccountById } = useMallAccounts();
@@ -30,8 +31,13 @@ const AccountPage = () => {
 	}, [id, location.state]);
 
 	return (
-		<div className="mt-8 mx-4 md:mx-8">
-			<AccountPageHeader loading={loading} account={account} />
+		<div className="mt-8 mx-4 md:mx-8 flex flex-column gap-4 align-items-center">
+			<AccountPageHeader
+				loading={loading}
+				account={account}
+				className="w-full"
+			/>
+			<ShopsList />
 		</div>
 	);
 };

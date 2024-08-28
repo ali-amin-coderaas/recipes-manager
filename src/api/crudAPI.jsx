@@ -1,8 +1,10 @@
 import api from "./api";
 
-export const getAllAccounts = async (page, pageSize) => {
+export const getAll = async (endpoint, page, pageSize) => {
 	try {
-		const response = await api.get(`/accounts/?page=${page}&?pageSize=${pageSize}`);
+		const response = await api.get(
+			`/${endpoint}/?page=${page}&pageSize=${pageSize}`
+		);
 		return {
 			data: response.data.data.items,
 			pagination: {

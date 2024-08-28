@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
 	createAccount,
-	getAllAccounts,
+	getAll,
 	getById,
 	softDeleteAccount,
-} from "../api/mallAccountsAPI";
+} from "../api/crudAPI";
 
-function useAccounts() {
-	const [accounts, setAccounts] = useState([]);
+function useAccounts(endpoint) {
+	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [currentPage, setCurrentPage] = useState(1);
 	const [totalItems, setTotalItems] = useState(0);
-	const [pageSize, setPageSize] = useState(5);
-
 	const [searchParams, setSearchParams] = useSearchParams();
 
+	const currentPage = parseInt(searchParams.get("page"), 10) || 1;
+	const pageSize = parseInt(searchParams.get("pageSize"), 10) || 5;
+
 	const updateURLParams = (page, pageSize) => {
-		setSearchParams({ page, pageSize });
+		setSearchParams((curr) => {
+			curr.set("page", page);
+			curr.set("pageSize", pageSize);
+			return curr;
+		});
 	};
 
 	const addAccount = async (name) => {
@@ -57,12 +61,9 @@ function useAccounts() {
 		setLoading(true);
 
 		try {
-			const data = await getAllAccounts(page, pageSize);
-
-			setAccounts(data.data || []);
-			setCurrentPage(data.pagination.currentPage || currentPage);
+			const data = await getAll(endpoint, page, pageSize);
+			setData(data.data || []);
 			setTotalItems(data.pagination.totalItems || totalItems);
-			setPageSize(data.pagination.pageSize || pageSize);
 			updateURLParams(data.pagination.currentPage, data.pagination.pageSize);
 		} catch (error) {
 			setError(error);
@@ -73,10 +74,10 @@ function useAccounts() {
 
 	useEffect(() => {
 		fetchData(currentPage, pageSize);
-	}, [currentPage, pageSize, searchParams]);
+	}, []);
 
 	return {
-		accounts,
+		data,
 		loading,
 		error,
 		addAccount,
@@ -85,7 +86,7 @@ function useAccounts() {
 		currentPage,
 		totalItems,
 		pageSize,
-		setCurrentPage,
+		setCurrentPage: (page) => updateURLParams(page, pageSize),
 	};
 }
 

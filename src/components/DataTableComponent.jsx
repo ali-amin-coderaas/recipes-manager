@@ -1,48 +1,66 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { IconField } from "primereact/iconfield";
-import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import { Paginator } from "primereact/paginator";
 import { Skeleton } from "primereact/skeleton";
-import React, { useRef } from "react";
+import React, { useState } from "react";
+import useAccounts from "../hooks/useAccounts";
 
 const DataTableComponent = ({
-	data,
+	// customHook,
 	columns,
-	isLoading,
+	createDialog: CreateDialog,
+	fields,
 	onCreate,
-	setGlobalFilter,
-	selection,
-	onSelectionChange,
-	currentPage,
-	totalItems,
-	pageSize,
-	onPageChange,
-	...rest
+	endpoint,
 }) => {
-	const dt = useRef(null);
+	const {
+		data: items,
+		loading,
+		currentPage,
+		totalItems,
+		pageSize,
+		setCurrentPage,
+	} = useAccounts(endpoint);
 
 	const skeletonBodyTemplate = <Skeleton width="100%" />;
 
+	const [dialogVisible, setDialogVisible] = useState(false);
+
+	const handleCreate = () => {
+		setDialogVisible(true);
+	};
+
+	const handleDialogHide = () => {
+		setDialogVisible(false);
+	};
+
 	const header = (
 		<div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-			<IconField iconPosition="left">
-				<InputIcon className="pi pi-search" />
-				<InputText
-					type="search"
-					onInput={(e) => setGlobalFilter(e.target.value)}
-					placeholder="Search..."
-				/>
-			</IconField>
+			<InputText
+				type="search"
+				onInput={(e) => setGlobalFilter(e.target.value)}
+				placeholder="Search..."
+			/>
 			<Button
 				label="New"
 				icon="pi pi-plus"
 				severity="success"
 				rounded
-				onClick={onCreate}
+				onClick={handleCreate}
 			/>
 		</div>
+	);
+
+	const footer = (
+		<Paginator
+			template="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+			// rowsPerPageOptions={[5, 10, 25]}
+			totalRecords={totalItems}
+			rows={pageSize}
+			onPageChange={(e) => setCurrentPage(e.page + 1)}
+		/>
 	);
 
 	return (
@@ -51,24 +69,33 @@ const DataTableComponent = ({
 				<DataTable
 					scrollable
 					scrollHeight="450px"
-					ref={dt}
-					value={isLoading ? [null] : data}
-					selection={selection}
-					onSelectionChange={(e) => onSelectionChange(e.value)}
+					value={items}
 					dataKey="id"
 					header={header}
-					{...rest}
+					first={currentPage * pageSize - pageSize}
+					rows={pageSize}
+					totalRecords={totalItems}
+					onPage={(e) => setCurrentPage(e.page + 1)}
+					footer={footer}
 				>
 					{columns.map((col, index) => (
 						<Column
 							key={index}
 							field={col.field}
 							header={col.header}
-							body={isLoading ? () => skeletonBodyTemplate : col.body}
+							body={loading ? () => skeletonBodyTemplate : col.body}
 						/>
 					))}
 				</DataTable>
 			</div>
+			{CreateDialog && (
+				<CreateDialog
+					fields={fields}
+					visible={dialogVisible}
+					onHide={handleDialogHide}
+					onSubmit={onCreate}
+				/>
+			)}
 		</div>
 	);
 };
