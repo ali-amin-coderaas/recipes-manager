@@ -5,24 +5,24 @@ import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import { Skeleton } from "primereact/skeleton";
 import React, { useState } from "react";
-import useAccounts from "../hooks/useAccounts";
+import useApi from "../hooks/useApi";
 
 const DataTableComponent = ({
-	// customHook,
 	columns,
 	createDialog: CreateDialog,
 	fields,
-	onCreate,
 	endpoint,
 }) => {
 	const {
 		data: items,
-		loading,
+		isLoading,
 		currentPage,
 		totalItems,
 		pageSize,
 		setCurrentPage,
-	} = useAccounts(endpoint);
+		setPageSize,
+		createItem,
+	} = useApi(endpoint);
 
 	const skeletonBodyTemplate = <Skeleton width="100%" />;
 
@@ -33,6 +33,15 @@ const DataTableComponent = ({
 	};
 
 	const handleDialogHide = () => {
+		setDialogVisible(false);
+	};
+	const handleCreateDialogSubmit = (formData) => {
+		const dataToSubmit = fields.reduce((acc, field) => {
+			acc[field.name] = formData[field.name] || "";
+			return acc;
+		}, {});
+
+		createItem(dataToSubmit);
 		setDialogVisible(false);
 	};
 
@@ -55,11 +64,16 @@ const DataTableComponent = ({
 
 	const footer = (
 		<Paginator
-			template="RowsPerPageDropdown FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
-			// rowsPerPageOptions={[5, 10, 25]}
+			template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+			first={(currentPage - 1) * pageSize}
 			totalRecords={totalItems}
 			rows={pageSize}
-			onPageChange={(e) => setCurrentPage(e.page + 1)}
+			onPageChange={(e) => {
+				setCurrentPage(e.page + 1);
+				setPageSize(e.rows);
+			}}
+			rowsPerPageOptions={[5, 10, 25]}
+			change
 		/>
 	);
 
@@ -68,14 +82,11 @@ const DataTableComponent = ({
 			<div className="card">
 				<DataTable
 					scrollable
-					scrollHeight="450px"
+					scrollHeight="550px"
 					value={items}
+					first={(currentPage - 1) * pageSize}
 					dataKey="id"
 					header={header}
-					first={currentPage * pageSize - pageSize}
-					rows={pageSize}
-					totalRecords={totalItems}
-					onPage={(e) => setCurrentPage(e.page + 1)}
 					footer={footer}
 				>
 					{columns.map((col, index) => (
@@ -83,7 +94,7 @@ const DataTableComponent = ({
 							key={index}
 							field={col.field}
 							header={col.header}
-							body={loading ? () => skeletonBodyTemplate : col.body}
+							body={isLoading ? () => skeletonBodyTemplate : col.body}
 						/>
 					))}
 				</DataTable>
@@ -93,7 +104,7 @@ const DataTableComponent = ({
 					fields={fields}
 					visible={dialogVisible}
 					onHide={handleDialogHide}
-					onSubmit={onCreate}
+					onSubmit={handleCreateDialogSubmit}
 				/>
 			)}
 		</div>

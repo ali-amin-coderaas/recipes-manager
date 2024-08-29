@@ -6,7 +6,6 @@ const AccountsView = () => {
 	return (
 		<div className="mx-4 md:mx-8">
 			<h1>Available Accounts</h1>
-
 			<AccountsTable />
 		</div>
 	);

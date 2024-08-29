@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useAccounts from "../hooks/useAccounts";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
 import CreateDialog from "./CreateDialog";
 import DataTableComponent from "./DataTableComponent";
 const AccountsTable = () => {
+	const endpoint = "accounts";
 	const columns = [
 		{
 			field: "id",
@@ -15,7 +15,7 @@ const AccountsTable = () => {
 			field: "name",
 			header: "Name",
 			body: (rowData) => (
-				<Link to={`/accounts/${rowData.id}`} className="text-primary">
+				<Link to={`/${endpoint}/${rowData.id}`} className="text-primary">
 					{rowData.name}
 				</Link>
 			),
@@ -38,7 +38,7 @@ const AccountsTable = () => {
 
 	return (
 		<DataTableComponent
-			endpoint={"accounts"}
+			endpoint={endpoint}
 			columns={columns}
 			createDialog={CreateDialog}
 			fields={createFields}

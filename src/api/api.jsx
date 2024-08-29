@@ -14,7 +14,6 @@ export const setupInterceptors = (logout) => {
 			if (token) {
 				config.headers.authorization = `Bearer ${token}`;
 			}
-
 			return config;
 		},
 		(error) => {
