@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import { Skeleton } from "primereact/skeleton";
 import React, { useState } from "react";
+import { useToast } from "../context/ToastContext";
 import useApi from "../hooks/useApi";
 
 const DataTableComponent = ({
@@ -27,6 +28,7 @@ const DataTableComponent = ({
 	const skeletonBodyTemplate = <Skeleton width="100%" />;
 
 	const [dialogVisible, setDialogVisible] = useState(false);
+	const { showToast } = useToast();
 
 	const handleCreate = () => {
 		setDialogVisible(true);
@@ -42,6 +44,7 @@ const DataTableComponent = ({
 		}, {});
 
 		createItem(dataToSubmit);
+		showToast("success", "Created", "Item created successfully");
 		setDialogVisible(false);
 	};
 

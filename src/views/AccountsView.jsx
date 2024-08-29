@@ -1,5 +1,4 @@
 import React from "react";
-// import AccountsList from "../components/AccountsList";
 import AccountsTable from "../components/AccountsTable";
 
 const AccountsView = () => {

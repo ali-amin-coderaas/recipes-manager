@@ -21,6 +21,19 @@ function useApi(endpoint) {
 		});
 	};
 
+	const fetchData = async (page = currentPage, pageSize) => {
+		setIsLoading(true);
+		try {
+			const data = await apiService.getAll(page, pageSize);
+			setData(data.data);
+			setTotalItems(data.pagination.totalItems || totalItems);
+		} catch (error) {
+			setError(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	const updateItem = async (id, data) => {
 		setIsLoading(true);
 		try {
@@ -49,7 +62,7 @@ function useApi(endpoint) {
 		setIsLoading(true);
 		try {
 			const response = await apiService.getById(id);
-			return response;
+			return response.data;
 		} catch (error) {
 			setError(error);
 		} finally {
@@ -62,21 +75,6 @@ function useApi(endpoint) {
 
 		try {
 			await apiService.softDelete(id);
-		} catch (error) {
-			setError(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	const fetchData = async (page = currentPage, pageSize) => {
-		setIsLoading(true);
-
-		try {
-			const data = await apiService.getAll(page, pageSize);
-			setData(data.data || []);
-			setTotalItems(data.pagination.totalItems || totalItems);
-			updateURLParams(data.pagination.currentPage, data.pagination.pageSize);
 		} catch (error) {
 			setError(error);
 		} finally {

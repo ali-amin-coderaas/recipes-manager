@@ -34,15 +34,12 @@ const AccountsTable = () => {
 
 	const createFields = [{ name: "name", label: "Name", type: "text" }];
 
-	const createAccount = () => {};
-
 	return (
 		<DataTableComponent
 			endpoint={endpoint}
 			columns={columns}
 			createDialog={CreateDialog}
 			fields={createFields}
-			onCreate={createAccount}
 		/>
 	);
 };
