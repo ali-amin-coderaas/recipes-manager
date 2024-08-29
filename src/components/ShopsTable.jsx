@@ -40,7 +40,7 @@ const ShopsTable = ({ id, ...rest }) => {
 	const createFields = [
 		{ name: "name", label: "Name", type: "text" },
 		{ name: "businessName", label: "Business Name", type: "text" },
-		{ name: "email", label: "Email", type: "text" },
+		{ name: "email", label: "Email", type: "email" },
 	];
 
 	return (

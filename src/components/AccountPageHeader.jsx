@@ -114,8 +114,8 @@ const AccountPageHeader = ({
 					</div>
 				}
 			>
-				{Object.keys(editableAccount).map((field) => (
-					<div key={field} className="field">
+				{Object.keys(editableAccount).map((field, index) => (
+					<div key={index} className="field">
 						<label htmlFor={field} className="block">
 							{field}
 						</label>

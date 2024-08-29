@@ -88,7 +88,6 @@ const DataTableComponent = ({
 					scrollHeight="550px"
 					value={items}
 					first={(currentPage - 1) * pageSize}
-					dataKey="id"
 					header={header}
 					footer={footer}
 				>

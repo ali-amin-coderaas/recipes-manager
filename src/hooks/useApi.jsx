@@ -3,7 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import ApiService from "./../api/ApiService";
 
 function useApi(endpoint) {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState([
+		{
+			data: {
+				items: [],
+			},
+		},
+	]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [totalItems, setTotalItems] = useState(0);
@@ -38,11 +44,11 @@ function useApi(endpoint) {
 		setIsLoading(true);
 		try {
 			await apiService.update(id, data);
-			await fetchData(currentPage, pageSize);
 		} catch (error) {
 			setError(error);
 		} finally {
 			setIsLoading(false);
+			await fetchData(currentPage, pageSize);
 		}
 	};
 
@@ -50,11 +56,11 @@ function useApi(endpoint) {
 		setIsLoading(true);
 		try {
 			await apiService.create(data);
-			await fetchData(currentPage, pageSize);
 		} catch (error) {
 			setError(error);
 		} finally {
 			setIsLoading(false);
+			await fetchData(currentPage, pageSize);
 		}
 	};
 
@@ -72,7 +78,6 @@ function useApi(endpoint) {
 
 	const deleteItem = async (id) => {
 		setIsLoading(true);
-
 		try {
 			await apiService.softDelete(id);
 		} catch (error) {
