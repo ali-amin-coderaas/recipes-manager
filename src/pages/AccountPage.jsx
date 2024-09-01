@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useApi from "../../hooks/useApi";
-import AccountPageHeader from "../AccountPageHeader";
-import ShopsTable from "../ShopsTable";
+import AccountPageHeader from "../components/AccountPageHeader";
+import ShopsTable from "../components/ShopsTable";
+import useApi from "../hooks/useApi";
 
 const AccountPage = () => {
 	const { isLoading, getItemById } = useApi("accounts");
@@ -30,6 +30,7 @@ const AccountPage = () => {
 
 	return (
 		<div className="mt-8 mx-4 md:mx-8 flex flex-column gap-4 align-items-center ">
+			<h1>Account Information</h1>
 			<AccountPageHeader
 				loading={isLoading}
 				account={account}

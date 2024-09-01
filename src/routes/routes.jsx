@@ -1,5 +1,5 @@
+import AccountPage from "..//pages/AccountPage";
 import Root from "../components/layout/Root";
-import AccountPage from "../components/pages/AccountPage";
 import ErrorPage from "../ErrorPage";
 import AccountsView from "../views/AccountsView";
 import DashboardView from "../views/DashboardView";

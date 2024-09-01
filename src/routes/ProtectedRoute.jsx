@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
+import { useToast } from "../context/ToastContext";
 import { useAuth } from "../hooks/useAuth";
 
 const ProtectedRoute = ({ children }) => {

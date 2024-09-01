@@ -33,7 +33,6 @@ const Root = () => {
 					label: "Logout",
 					command: logout,
 					icon: "pi pi-sign-out",
-					// style: { color: "red" },
 				},
 		  ]
 		: [
@@ -52,12 +51,12 @@ const Root = () => {
 		  ];
 
 	return (
-		<div className="root-div">
+		<div className="m-0">
 			<header>
 				<Menubar
+					className="bg-primary justify-content-between border-none border-noround px-8"
 					model={menuItems}
 					start={start}
-					style={{ justifyContent: "space-between" }}
 				/>
 			</header>
 			<main>
