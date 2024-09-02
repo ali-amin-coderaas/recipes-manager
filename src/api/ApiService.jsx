@@ -5,13 +5,15 @@ class ApiService {
 		this.endpoint = endpoint;
 	}
 
-	async getAll(page, pageSize, searchQuery) {
+	async getAll(page, pageSize, searchQuery, sortBy, order) {
 		try {
 			const response = await api.get(`/${this.endpoint}`, {
 				params: {
 					page: page,
 					pageSize: pageSize,
 					q: searchQuery,
+					sortBy: sortBy,
+					order: order,
 				},
 			});
 			return {

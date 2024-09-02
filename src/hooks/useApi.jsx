@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ApiService from "./../api/ApiService";
 
-function useApi(endpoint) {
+function useApi(endpoint, enableUseEffect = false) {
 	const [data, setData] = useState([
 		{
 			data: {
@@ -20,6 +20,8 @@ function useApi(endpoint) {
 	const currentPage = parseInt(searchParams.get("page"), 10) || 1;
 	const pageSize = parseInt(searchParams.get("pageSize"), 10) || 5;
 	const searchQuery = searchParams.get("q") || "";
+	const sortBy = searchParams.get("sortBy") || "createdAt";
+	const order = searchParams.get("order") || "desc";
 
 	const updateURLParams = (field, value) => {
 		setSearchParams((curr) => {
@@ -28,10 +30,22 @@ function useApi(endpoint) {
 		});
 	};
 
-	const fetchData = async (page = currentPage, pageSize, searchQuery) => {
+	const fetchData = async (
+		page = currentPage,
+		pageSize,
+		searchQuery,
+		sortBy,
+		order
+	) => {
 		setIsLoading(true);
 		try {
-			const data = await apiService.getAll(page, pageSize, searchQuery);
+			const data = await apiService.getAll(
+				page,
+				pageSize,
+				searchQuery,
+				sortBy,
+				order
+			);
 			setData(data.data);
 			setTotalItems(data.pagination.totalItems || totalItems);
 		} catch (error) {
@@ -88,10 +102,11 @@ function useApi(endpoint) {
 		}
 	};
 
-	useEffect(() => {
-		fetchData(currentPage, pageSize, searchQuery);
-	}, [currentPage, pageSize, searchQuery]);
-
+	if (enableUseEffect) {
+		useEffect(() => {
+			fetchData(currentPage, pageSize, searchQuery, sortBy, order);
+		}, [currentPage, pageSize, searchQuery]);
+	}
 	return {
 		data,
 		isLoading,

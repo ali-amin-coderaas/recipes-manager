@@ -25,7 +25,7 @@ const DataTableComponent = ({
 		setPageSize,
 		setSearchQuery,
 		createItem,
-	} = useApi(endpoint);
+	} = useApi(endpoint, true);
 
 	const skeletonBodyTemplate = <Skeleton width="100%" />;
 

@@ -15,7 +15,7 @@ export const setupInterceptors = (logout) => {
 		(config) => {
 			const token = Cookies.get("jwtToken");
 			if (token) {
-				config.headers.authorization = `Bearer ${token}`;
+				config.headers.Authorization = `Bearer ${token}`;
 			}
 			return config;
 		},

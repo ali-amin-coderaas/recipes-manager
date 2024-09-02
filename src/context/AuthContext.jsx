@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	const login = (token) => {
-		Cookies.set("jwtToken", token, { expires: 7 });
+		Cookies.set("jwtToken", token, { expires: 1 });
 		setIsLoggedIn(true);
 	};
 
