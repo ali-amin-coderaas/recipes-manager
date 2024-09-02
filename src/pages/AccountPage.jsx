@@ -15,7 +15,6 @@ const AccountPage = () => {
 		const fetchAccount = async () => {
 			try {
 				const account = await getItemById(id);
-				console.log("🚀 ~ fetchAccount ~ account:", account);
 				if (!account) {
 					navigate("/accounts");
 					throw new Error("Account not found");

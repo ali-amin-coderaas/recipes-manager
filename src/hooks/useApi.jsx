@@ -19,6 +19,7 @@ function useApi(endpoint) {
 
 	const currentPage = parseInt(searchParams.get("page"), 10) || 1;
 	const pageSize = parseInt(searchParams.get("pageSize"), 10) || 5;
+	const searchQuery = searchParams.get("q") || "";
 
 	const updateURLParams = (field, value) => {
 		setSearchParams((curr) => {
@@ -27,10 +28,10 @@ function useApi(endpoint) {
 		});
 	};
 
-	const fetchData = async (page = currentPage, pageSize) => {
+	const fetchData = async (page = currentPage, pageSize, searchQuery) => {
 		setIsLoading(true);
 		try {
-			const data = await apiService.getAll(page, pageSize);
+			const data = await apiService.getAll(page, pageSize, searchQuery);
 			setData(data.data);
 			setTotalItems(data.pagination.totalItems || totalItems);
 		} catch (error) {
@@ -88,8 +89,8 @@ function useApi(endpoint) {
 	};
 
 	useEffect(() => {
-		fetchData(currentPage, pageSize);
-	}, [currentPage, pageSize]);
+		fetchData(currentPage, pageSize, searchQuery);
+	}, [currentPage, pageSize, searchQuery]);
 
 	return {
 		data,
@@ -99,11 +100,13 @@ function useApi(endpoint) {
 		updateItem,
 		getItemById,
 		deleteItem,
+		searchQuery,
 		currentPage,
 		totalItems,
 		pageSize,
 		setCurrentPage: (page) => updateURLParams("page", page),
 		setPageSize: (pageSize) => updateURLParams("pageSize", pageSize),
+		setSearchQuery: (searchQuery) => updateURLParams("q", searchQuery),
 	};
 }
 

@@ -20,8 +20,10 @@ const DataTableComponent = ({
 		currentPage,
 		totalItems,
 		pageSize,
+		searchQuery,
 		setCurrentPage,
 		setPageSize,
+		setSearchQuery,
 		createItem,
 	} = useApi(endpoint);
 
@@ -36,6 +38,11 @@ const DataTableComponent = ({
 
 	const handleDialogHide = () => {
 		setDialogVisible(false);
+	};
+
+	const handleFilterInputChange = (event) => {
+		setSearchQuery(event.target.value);
+		setCurrentPage(1);
 	};
 	const handleCreateDialogSubmit = (formData) => {
 		const dataToSubmit = fields.reduce((acc, field) => {
@@ -52,7 +59,8 @@ const DataTableComponent = ({
 		<div className="flex flex-wrap gap-2 align-items-center justify-content-between">
 			<InputText
 				type="search"
-				onInput={(e) => setGlobalFilter(e.target.value)}
+				onInput={handleFilterInputChange}
+				value={searchQuery}
 				placeholder="Search..."
 			/>
 			<Button

@@ -1,33 +1,34 @@
 // src/context/AuthContext.js
+import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
+const token = Cookies.get("jwtToken");
+
 export const AuthProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(() => {
-		const token = localStorage.getItem("jwtToken");
-		return token !== null;
+		if (token) {
+			return true;
+		}
+		return false;
 	});
 
 	useEffect(() => {
-		const token = localStorage.getItem("jwtToken");
-
 		if (token) {
 			setIsLoggedIn(true);
 		}
 	}, []);
 
 	const login = (token) => {
-		localStorage.setItem("jwtToken", token);
+		Cookies.set("jwtToken", token, { expires: 7 });
 		setIsLoggedIn(true);
 	};
 
 	const logout = () => {
-		localStorage.removeItem("jwtToken");
+		Cookies.remove("jwtToken");
 		setIsLoggedIn(false);
 	};
-
-	console.log("Authentication state:", isLoggedIn);
 
 	return (
 		<AuthContext.Provider value={{ isLoggedIn, login, logout }}>
