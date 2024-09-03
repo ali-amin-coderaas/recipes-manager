@@ -84,7 +84,6 @@ const DataTableComponent = ({
 				setPageSize(e.rows);
 			}}
 			rowsPerPageOptions={[5, 10, 25]}
-			change
 		/>
 	);
 
@@ -101,6 +100,7 @@ const DataTableComponent = ({
 				>
 					{columns.map((col, index) => (
 						<Column
+							sortable
 							key={index}
 							field={col.field}
 							header={col.header}

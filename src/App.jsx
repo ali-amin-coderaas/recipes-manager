@@ -1,6 +1,6 @@
 import "primeicons/primeicons.css";
 import { PrimeReactProvider } from "primereact/api";
-import "primereact/resources/themes/lara-light-purple/theme.css";
+// import "primereact/resources/themes/soho-dark/theme.css";
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";

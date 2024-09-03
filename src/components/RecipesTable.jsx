@@ -1,8 +1,8 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Paginator } from "primereact/paginator";
 import { useState } from "react";
 import useRecipes from "../hooks/useRecipes";
-import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
 import Sorting from "./Sorting";
 
@@ -32,10 +32,6 @@ const RecipesTable = () => {
 		setCurrentPage(1);
 	};
 
-	const onPageChange = (newPage) => {
-		setCurrentPage(newPage);
-	};
-
 	const header = (
 		<div className="flex justify-content-between align-items-center flex-wrap gap-2 md:gap-0">
 			<span className="text-900 font-bold text-xl">Recipes</span>
@@ -45,11 +41,14 @@ const RecipesTable = () => {
 	);
 
 	const footer = (
-		<Pagination
-			currentPage={currentPage}
-			totalItems={totalRecipes}
-			pageSize={recipesPerPage}
-			onPageChange={onPageChange}
+		<Paginator
+			template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+			first={(currentPage - 1) * recipesPerPage}
+			totalRecords={totalRecipes}
+			rows={recipesPerPage}
+			onPageChange={(e) => {
+				setCurrentPage(e.page + 1);
+			}}
 		/>
 	);
 

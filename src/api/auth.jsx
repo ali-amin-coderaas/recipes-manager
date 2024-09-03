@@ -3,7 +3,7 @@ import api from "./api";
 export const loginUser = async (email, password) => {
 	try {
 		const response = await api.post(
-			"/login",
+			"/auth/login",
 			JSON.stringify({ email, password })
 		);
 
@@ -15,7 +15,7 @@ export const loginUser = async (email, password) => {
 
 export const registerUser = async (first_name, last_name, email, password) => {
 	try {
-		const response = await api.post("/register", {
+		const response = await api.post("/auth/register", {
 			first_name,
 			last_name,
 			email,

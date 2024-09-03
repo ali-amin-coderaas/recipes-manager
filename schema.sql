@@ -14,7 +14,8 @@ CREATE TABLE
 CREATE TABLE
     users (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -33,14 +34,14 @@ CREATE TABLE
     shops (
         id INT AUTO_INCREMENT PRIMARY KEY,
         accountId INT,
-        name VARCHAR(255),
-        businessName VARCHAR(255),
-        email VARCHAR(255),
+        name VARCHAR(255) NOT NULL,
+        businessName VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
         businessAddress VARCHAR(255),
         internalAddress VARCHAR(255),
         taxInformation VARCHAR(255),
         isActive BOOLEAN,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (accountId) REFERENCES account (id)
+        FOREIGN KEY (accountId) REFERENCES accounts (id)
     );
