@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
-import CreateDialog from "./CreateDialog";
 import DataTableComponent from "./DataTableComponent";
+import DialogComponent from "./DialogComponent";
 const ShopsTable = ({ id, ...rest }) => {
 	let endpoint = `accounts/${id}/shops`;
 	const columns = [
@@ -53,7 +53,7 @@ const ShopsTable = ({ id, ...rest }) => {
 			<DataTableComponent
 				endpoint={endpoint}
 				columns={columns}
-				createDialog={CreateDialog}
+				createDialog={DialogComponent}
 				fields={createFields}
 			/>
 		</div>
