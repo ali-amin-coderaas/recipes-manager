@@ -101,7 +101,7 @@ const AccountPageHeader = ({
 					SkeletonLabelTemplate
 				) : (
 					<div>
-						<label htmlFor="account-name" className="text-xs font-regular">
+						<label htmlFor="account-name" className="text-sm font-regular">
 							Account name
 						</label>
 						<p className="font-bold m-0">{account.name}</p>
@@ -111,7 +111,7 @@ const AccountPageHeader = ({
 					SkeletonLabelTemplate
 				) : (
 					<div>
-						<label htmlFor="account-type" className="text-xs font-regular">
+						<label htmlFor="account-type" className="text-sm font-regular">
 							Account type
 						</label>
 						<div>
@@ -157,7 +157,7 @@ const AccountPageHeader = ({
 
 	return (
 		<div {...rest}>
-			<Card title={title} className="pt-4"></Card>
+			<Card title={title}></Card>
 
 			<DialogComponent
 				onSubmit={editAccount}
@@ -165,6 +165,7 @@ const AccountPageHeader = ({
 				fields={updateFields}
 				forUpdate
 				initialValue={account}
+				onHide={() => setEditDialogVisible(false)}
 			/>
 			<ConfirmDialog />
 		</div>

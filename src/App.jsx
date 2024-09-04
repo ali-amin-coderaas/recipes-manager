@@ -11,9 +11,13 @@ import "/node_modules/primeflex/primeflex.css";
 
 const router = createBrowserRouter(routes);
 
+const value = {
+	ripple: true,
+};
+
 function App() {
 	return (
-		<PrimeReactProvider>
+		<PrimeReactProvider value={value}>
 			<ToastProvider>
 				<AuthProvider>
 					<RouterProvider

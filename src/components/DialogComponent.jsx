@@ -76,6 +76,20 @@ const DialogComponent = ({
 						</div>
 					);
 				}
+
+				if (field.type === "email") {
+					return (
+						<div key={index} className="field">
+							<label htmlFor={field.name}>{field.label}</label>
+							<InputText
+								id={field.name}
+								value={formData[field.name] || ""}
+								onChange={(e) => handleInputChange(e, field.name)}
+								type={field.type || "text"}
+							/>
+						</div>
+					);
+				}
 			})}
 		</Dialog>
 	);

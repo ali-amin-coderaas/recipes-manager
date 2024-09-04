@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setupInterceptors } from "../../api/api";
 import { useAuth } from "../../hooks/useAuth";
+import SideBar from "./SideBar";
 
 const Root = () => {
 	const { isLoggedIn, logout } = useAuth();
@@ -33,58 +34,55 @@ const Root = () => {
 		});
 	};
 
-	const menuItems =
-		[
-			{
-				icon: `pi pi-${isDarkMode ? "sun" : "moon"}`,
-				command: () => {
-					toggleTheme();
+	const menuItems = isLoggedIn
+		? [
+				{
+					label: "Dashboard",
+					command: () => {
+						navigate("/");
+					},
 				},
-			},
-		] && isLoggedIn
-			? [
-					{
-						label: "Dashboard",
-						command: () => {
-							navigate("/");
-						},
+				{
+					label: "Accounts",
+					command: () => {
+						navigate("/accounts");
 					},
-					{
-						label: "Accounts",
-						command: () => {
-							navigate("/accounts");
-						},
+				},
+				{
+					label: "Recipes",
+					command: () => {
+						navigate("/recipes");
 					},
-					{
-						label: "Recipes",
-						command: () => {
-							navigate("/recipes");
-						},
+				},
+				{
+					label: "Logout",
+					command: () => {
+						logout();
 					},
-					{
-						label: "Logout",
-						command: () => {
-							logout();
-						},
-						icon: "pi pi-sign-out",
+					icon: "pi pi-sign-out",
+				},
+		  ]
+		: [
+				{
+					label: "Login",
+					command: () => {
+						navigate("/login");
 					},
-			  ]
-			: [
-					{
-						label: "Login",
-						command: () => {
-							navigate("/login");
-						},
+				},
+				{
+					label: "Register",
+					command: () => {
+						navigate("/register");
 					},
-					{
-						label: "Register",
-						command: () => {
-							navigate("/register");
-						},
-					},
-			  ];
+				},
+		  ];
 
-	const start = <h1 className="pr-4">Mall Insights</h1>;
+	const start = (
+		<div className="flex gap-4 align-items-center">
+			<SideBar />
+			<h1 className="pr-4">Mall Insights</h1>
+		</div>
+	);
 
 	const end = (
 		<div className="">
@@ -110,7 +108,6 @@ const Root = () => {
 				<Menubar
 					color="primary"
 					className="  border-none border-noround flex-wrap px-4 md:px-8"
-					model={menuItems}
 					start={start}
 					end={end}
 				/>

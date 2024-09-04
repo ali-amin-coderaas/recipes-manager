@@ -46,6 +46,20 @@ const ShopsTable = ({ id, ...rest }) => {
 		{ name: "name", label: "Name", type: "text" },
 		{ name: "businessName", label: "Business Name", type: "text" },
 		{ name: "email", label: "Email", type: "email" },
+		{
+			name: "industry",
+			label: "Industry",
+			type: "dropdown",
+			options: [
+				"Food",
+				"Retail",
+				"Clothing",
+				"Entertainment",
+				"Health",
+				"Technology",
+				"Other",
+			],
+		},
 	];
 
 	return (

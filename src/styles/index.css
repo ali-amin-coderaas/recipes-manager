@@ -1,0 +1,7 @@
+.p-menubar-button {
+	display: none !important; /* Hide the menu button on small screens */
+}
+
+.p-tag-value {
+	white-space: nowrap;
+}
