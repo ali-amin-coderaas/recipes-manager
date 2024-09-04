@@ -18,7 +18,7 @@ function useApi(endpoint, enableUseEffect = false) {
 	const apiService = new ApiService(endpoint);
 
 	const currentPage = parseInt(searchParams.get("page"), 10) || 1;
-	const pageSize = parseInt(searchParams.get("pageSize"), 10) || 5;
+	const pageSize = parseInt(searchParams.get("pageSize"), 10) || 10;
 	const searchQuery = searchParams.get("q") || "";
 	const sortBy = searchParams.get("sortBy") || "createdAt";
 	const order = searchParams.get("order") || "desc";
@@ -58,12 +58,13 @@ function useApi(endpoint, enableUseEffect = false) {
 	const updateItem = async (id, data) => {
 		setIsLoading(true);
 		try {
-			await apiService.update(id, data);
+			const updatedData = await apiService.update(id, data);
+			console.log("🚀 ~ updateItem ~ updatedData:", updatedData)
+			return updatedData.data.items;
 		} catch (error) {
 			setError(error);
 		} finally {
 			setIsLoading(false);
-			await fetchData(currentPage, pageSize);
 		}
 	};
 

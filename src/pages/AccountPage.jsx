@@ -33,6 +33,7 @@ const AccountPage = () => {
 			<AccountPageHeader
 				loading={isLoading}
 				account={account}
+				setAccount={setAccount}
 				fields={["name"]}
 				className="w-full"
 			/>

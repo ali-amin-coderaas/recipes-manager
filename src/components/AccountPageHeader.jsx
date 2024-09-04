@@ -1,17 +1,18 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { Dialog } from "primereact/dialog";
-import { InputText } from "primereact/inputtext";
+import { Skeleton } from "primereact/skeleton";
+import { Tag } from "primereact/tag";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
 import useApi from "../hooks/useApi";
-import SkeletonFloatLabel from "./SkeletonFloatLabel";
+import DialogComponent from "./DialogComponent";
 
 const AccountPageHeader = ({
 	loading,
 	account,
+	setAccount,
 	disabled = true,
 	fields = {},
 	...rest
@@ -23,8 +24,28 @@ const AccountPageHeader = ({
 	const [editDialogVisible, setEditDialogVisible] = useState(false);
 	const [editableAccount, setEditableAccount] = useState({});
 
+	const SkeletonLabelTemplate = (
+		<div className="flex flex-column gap-2">
+			<Skeleton width="5rem" height="1rem" />
+			<Skeleton width="16rem" height="1.5rem" />
+		</div>
+	);
+
+	const accountTypes = [
+		{ label: "Personal", value: "Personal", severity: "primary" },
+		{ label: "Business", value: "Business", severity: "warning" },
+		{ label: "Non-Profit", value: "Non-Profit", severity: "success" },
+	];
+
+	const getSeverity = (type) => {
+		const accountType = accountTypes.find((item) => item.value === type);
+		return accountType ? accountType.severity : null;
+	};
+
 	useEffect(() => {
-		setEditableAccount({ ...account });
+		if (account) {
+			setEditableAccount(account);
+		}
 	}, [account]);
 
 	const deleteAccount = async () => {
@@ -36,14 +57,20 @@ const AccountPageHeader = ({
 		}
 	};
 
-	const editAccount = async () => {
+	const editAccount = async (formData) => {
 		try {
-			await updateItem(id, editableAccount);
+			const updatedAccount = {
+				name: formData.name,
+				accountType: formData.accountType,
+			};
+			const newAccount = await updateItem(id, updatedAccount);
+
+			setAccount({ ...account, ...newAccount });
 			setEditDialogVisible(false);
-			window.location.reload();
-			showToast("info", "Account updated", "Account updated successfully");
+			showToast("success", "Account updated", "Account updated successfully");
 		} catch (error) {
-			throw error;
+			console.error("Error updating account:", error);
+			showToast("error", "Update failed", "Unable to update account");
 		}
 	};
 
@@ -68,14 +95,34 @@ const AccountPageHeader = ({
 	};
 
 	const title = (
-		<div className="flex justify-content-center sm:justify-content-between flex-wrap gap-4">
-			<SkeletonFloatLabel
-				loading={loading}
-				id={"account-name"}
-				value={account.name || ""}
-				label={"Account name"}
-				disabled={disabled}
-			/>
+		<div className="flex justify-content-center sm:justify-content-between flex-wrap gap-4 align-items-center">
+			<div className="flex gap-4 flex-wrap">
+				{loading ? (
+					SkeletonLabelTemplate
+				) : (
+					<div>
+						<label htmlFor="account-name" className="text-xs font-regular">
+							Account name
+						</label>
+						<p className="font-bold m-0">{account.name}</p>
+					</div>
+				)}
+				{loading ? (
+					SkeletonLabelTemplate
+				) : (
+					<div>
+						<label htmlFor="account-type" className="text-xs font-regular">
+							Account type
+						</label>
+						<div>
+							<Tag
+								value={account.accountType}
+								severity={getSeverity(account.accountType)}
+							/>
+						</div>
+					</div>
+				)}
+			</div>
 			<div className="flex gap-2 flex-wrap">
 				<Button
 					label="Edit"
@@ -94,43 +141,31 @@ const AccountPageHeader = ({
 		</div>
 	);
 
+	const updateFields = [
+		{
+			name: "name",
+			label: "Name",
+			type: "text",
+		},
+		{
+			name: "accountType",
+			label: "Type",
+			type: "dropdown",
+			options: accountTypes,
+		},
+	];
+
 	return (
 		<div {...rest}>
 			<Card title={title} className="pt-4"></Card>
 
-			<Dialog
+			<DialogComponent
+				onSubmit={editAccount}
 				visible={editDialogVisible}
-				header="Edit Account"
-				modal
-				onHide={() => setEditDialogVisible(false)}
-				footer={
-					<div>
-						<Button
-							label="Cancel"
-							onClick={() => setEditDialogVisible(false)}
-							className="p-button-text"
-						/>
-						<Button label="Save" onClick={editAccount} />
-					</div>
-				}
-			>
-				{Object.keys(editableAccount).map((field, index) => (
-					<div key={index} className="field">
-						<label htmlFor={field} className="block">
-							{field}
-						</label>
-						<InputText
-							id={field}
-							value={editableAccount[field]}
-							onChange={(e) => handleInputChange(e, field)}
-							className="w-full"
-							disabled={
-								field === "id" || field === "createdAt" || field === "updatedAt"
-							}
-						/>
-					</div>
-				))}
-			</Dialog>
+				fields={updateFields}
+				forUpdate
+				initialValue={account}
+			/>
 			<ConfirmDialog />
 		</div>
 	);

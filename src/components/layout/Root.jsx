@@ -67,9 +67,6 @@ const Root = () => {
 							logout();
 						},
 						icon: "pi pi-sign-out",
-						style: {
-							color: "var(--primary-color-text)",
-						},
 					},
 			  ]
 			: [
@@ -104,11 +101,6 @@ const Root = () => {
 					mouseTrackTop: 15,
 				}}
 			></Button>
-			{isLoggedIn && (
-				<Button onClick={logout} rounded severity="danger">
-					Logout
-				</Button>
-			)}
 		</div>
 	);
 
@@ -117,10 +109,10 @@ const Root = () => {
 			<header>
 				<Menubar
 					color="primary"
-					className="  border-none border-noround flex-wrap"
+					className="  border-none border-noround flex-wrap px-4 md:px-8"
 					model={menuItems}
 					start={start}
-					// end={end}
+					end={end}
 				/>
 			</header>
 			<main className="mx-4 md:mx-8 mt-4">

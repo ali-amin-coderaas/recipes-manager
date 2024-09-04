@@ -52,11 +52,7 @@ class ApiService {
 	async update(id, data) {
 		try {
 			const response = await api.put(`/${this.endpoint}/${id}`, data);
-			return {
-				data: {
-					id: response.data.data.items.id,
-				},
-			};
+			return response.data;
 		} catch (error) {
 			throw error;
 		}

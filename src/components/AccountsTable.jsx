@@ -1,9 +1,9 @@
 import { Tag } from "primereact/tag";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
-import CreateDialog from "./CreateDialog";
 import DataTableComponent from "./DataTableComponent";
+import DialogComponent from "./DialogComponent";
 const AccountsTable = () => {
 	const endpoint = "accounts";
 
@@ -55,13 +55,31 @@ const AccountsTable = () => {
 		},
 	];
 
-	const createFields = [{ name: "name", label: "Name", type: "text" }];
+	const createFields = [
+		{
+			name: "name",
+			label: "Name",
+			type: "text",
+			props: {
+				placeholder: "Name",
+			},
+		},
+		{
+			name: "accountType",
+			label: "Account Type",
+			type: "dropdown",
+			options: accountTypes,
+			props: {
+				placeholder: "Select Account Type",
+			},
+		},
+	];
 
 	return (
 		<DataTableComponent
 			endpoint={endpoint}
 			columns={columns}
-			createDialog={CreateDialog}
+			createDialog={DialogComponent}
 			fields={createFields}
 		/>
 	);
