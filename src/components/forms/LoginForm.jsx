@@ -45,7 +45,7 @@ export default function LoginForm() {
 	};
 
 	return (
-		<div className="flex flex-column align-items-center justify-content-center gap-3 py-5">
+		<div className="flex flex-column gap-3 align-items-end">
 			<InputField
 				label={"Email"}
 				id="email"
@@ -66,7 +66,6 @@ export default function LoginForm() {
 			<Button
 				label="Login"
 				icon="pi pi-user"
-				className="w-10rem mx-auto"
 				disabled={!IsFormValid()}
 				onClick={handleSubmit}
 				loading={loading}

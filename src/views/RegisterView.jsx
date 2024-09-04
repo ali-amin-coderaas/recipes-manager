@@ -30,7 +30,6 @@ const RegisterView = () => {
 						label="Login"
 						icon="pi pi-user-plus"
 						severity="success"
-						className="w-10rem"
 						onClick={() => navigate("/login")}
 					/>
 				</div>

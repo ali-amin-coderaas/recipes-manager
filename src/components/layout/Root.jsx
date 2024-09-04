@@ -3,15 +3,11 @@ import { Button } from "primereact/button";
 import { Menubar } from "primereact/menubar";
 import { useContext, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { setupInterceptors } from "../../api/api";
-import { useAuth } from "../../hooks/useAuth";
 import SideBar from "./SideBar";
 
 const Root = () => {
-	const { isLoggedIn, logout } = useAuth();
 	const [isDarkMode, setIsDarkMode] = useState(false);
 	const navigate = useNavigate();
-	setupInterceptors(logout);
 
 	const context = useContext(PrimeReactContext);
 
@@ -33,49 +29,6 @@ const Root = () => {
 			setIsDarkMode(!isDarkMode);
 		});
 	};
-
-	const menuItems = isLoggedIn
-		? [
-				{
-					label: "Dashboard",
-					command: () => {
-						navigate("/");
-					},
-				},
-				{
-					label: "Accounts",
-					command: () => {
-						navigate("/accounts");
-					},
-				},
-				{
-					label: "Recipes",
-					command: () => {
-						navigate("/recipes");
-					},
-				},
-				{
-					label: "Logout",
-					command: () => {
-						logout();
-					},
-					icon: "pi pi-sign-out",
-				},
-		  ]
-		: [
-				{
-					label: "Login",
-					command: () => {
-						navigate("/login");
-					},
-				},
-				{
-					label: "Register",
-					command: () => {
-						navigate("/register");
-					},
-				},
-		  ];
 
 	const start = (
 		<div className="flex gap-4 align-items-center">

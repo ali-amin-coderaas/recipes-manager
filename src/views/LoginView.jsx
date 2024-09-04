@@ -9,10 +9,10 @@ export default function LoginView() {
 	return (
 		<div className="card my-8 flex justify-content-center">
 			<div className="flex flex-column md:flex-row gap-0 md:gap-8">
-				<div className="w-full md:w-5">
+				<div className=" md:w-5">
 					<LoginForm />
 				</div>
-				<div className="w-full md:w-2">
+				<div className=" md:w-2">
 					<Divider layout="vertical" className="hidden md:flex">
 						<b>OR</b>
 					</Divider>
@@ -29,7 +29,6 @@ export default function LoginView() {
 						label="Register"
 						icon="pi pi-user-plus"
 						severity="success"
-						className="w-10rem"
 						onClick={() => navigate("/register")}
 					/>
 				</div>
