@@ -48,7 +48,7 @@ export default function AccountChartStats({ ...rest }) {
 	if (loading) return <div>Loading...</div>;
 
 	return (
-		<div {...rest}>
+		<div {...rest} className="surface-50 border-round shadow-2 p-3 w-full">
 			<h3>Account Stats</h3>
 			<PieChart
 				data={{
@@ -56,7 +56,7 @@ export default function AccountChartStats({ ...rest }) {
 					datasets: [
 						{
 							data: Object.values(accountStats),
-							backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+							backgroundColor: ["#F97316", "#3B82F6", "#22C55E"],
 						},
 					],
 				}}

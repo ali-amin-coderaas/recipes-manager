@@ -32,9 +32,10 @@ export default function ShopChartStats({ ...rest }) {
 	}, []);
 
 	const chartOptions = {
-		maintainAspectRatio: false,
+		maintainAspectRatio: true,
 		plugins: {
 			legend: {
+				display: false,
 				position: "right",
 			},
 			tooltip: {
@@ -48,7 +49,7 @@ export default function ShopChartStats({ ...rest }) {
 	if (loading) return <div>Loading...</div>;
 
 	return (
-		<div {...rest}>
+		<div {...rest} className="surface-50 border-round shadow-2 p-3 w-full ">
 			<h3>Shop Stats</h3>
 			<BarChart
 				data={{

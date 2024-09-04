@@ -19,7 +19,7 @@ const AccountPage = () => {
 					navigate("/accounts");
 					throw new Error("Account not found");
 				}
-				setAccount(account);
+				setAccount(account.data.items);
 			} catch (error) {
 				throw error;
 			}
@@ -28,7 +28,7 @@ const AccountPage = () => {
 	}, [id]);
 
 	return (
-		<div className="mt-8 mx-4 md:mx-8 flex flex-column gap-4 align-items-center ">
+		<div className=" flex flex-column gap-4 align-items-center ">
 			<h1>Account Information</h1>
 			<AccountPageHeader
 				loading={isLoading}

@@ -92,7 +92,7 @@ const DataTableComponent = ({
 			<div className="card">
 				<DataTable
 					scrollable
-					scrollHeight="550px"
+					scrollHeight="600px"
 					value={items}
 					first={(currentPage - 1) * pageSize}
 					header={header}

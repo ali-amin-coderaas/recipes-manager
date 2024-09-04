@@ -33,47 +33,64 @@ const Root = () => {
 		});
 	};
 
-	const menuItems = isLoggedIn
-		? [
-				{
-					label: "Dashboard",
-					command: () => {
-						navigate("/");
-					},
+	const menuItems =
+		[
+			{
+				icon: `pi pi-${isDarkMode ? "sun" : "moon"}`,
+				command: () => {
+					toggleTheme();
 				},
-				{
-					label: "Accounts",
-					command: () => {
-						navigate("/accounts");
+			},
+		] && isLoggedIn
+			? [
+					{
+						label: "Dashboard",
+						command: () => {
+							navigate("/");
+						},
 					},
-				},
-				{
-					label: "Recipes",
-					command: () => {
-						navigate("/recipes");
+					{
+						label: "Accounts",
+						command: () => {
+							navigate("/accounts");
+						},
 					},
-				},
-		  ]
-		: [
-				{
-					label: "Login",
-					command: () => {
-						navigate("/login");
+					{
+						label: "Recipes",
+						command: () => {
+							navigate("/recipes");
+						},
 					},
-				},
-				{
-					label: "Register",
-					command: () => {
-						navigate("/register");
+					{
+						label: "Logout",
+						command: () => {
+							logout();
+						},
+						icon: "pi pi-sign-out",
+						style: {
+							color: "var(--primary-color-text)",
+						},
 					},
-				},
-		  ];
+			  ]
+			: [
+					{
+						label: "Login",
+						command: () => {
+							navigate("/login");
+						},
+					},
+					{
+						label: "Register",
+						command: () => {
+							navigate("/register");
+						},
+					},
+			  ];
 
 	const start = <h1 className="pr-4">Mall Insights</h1>;
 
 	const end = (
-		<div className="flex gap-4 align-items-center">
-			<h1 className="pr-4">Mall Insights</h1>
+		<div className="">
 			<Button
 				icon={isDarkMode ? "pi pi-sun" : "pi pi-moon"}
 				onClick={toggleTheme}
@@ -100,13 +117,13 @@ const Root = () => {
 			<header>
 				<Menubar
 					color="primary"
-					className="  border-none border-noround px-2"
+					className="  border-none border-noround flex-wrap"
 					model={menuItems}
-					// start={start}
-					end={end}
+					start={start}
+					// end={end}
 				/>
 			</header>
-			<main className="mx-4 md:mx-8 my-8">
+			<main className="mx-4 md:mx-8 mt-4">
 				<Outlet />
 			</main>
 		</div>

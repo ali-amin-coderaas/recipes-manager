@@ -1,10 +1,23 @@
-import React from "react";
+import { Tag } from "primereact/tag";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
 import CreateDialog from "./CreateDialog";
 import DataTableComponent from "./DataTableComponent";
 const AccountsTable = () => {
 	const endpoint = "accounts";
+
+	const accountTypes = [
+		{ label: "Personal", value: "Personal", severity: "primary" },
+		{ label: "Business", value: "Business", severity: "warning" },
+		{ label: "Non-Profit", value: "Non-Profit", severity: "success" },
+	];
+
+	const getSeverity = (type) => {
+		const accountType = accountTypes.find((item) => item.value === type);
+		return accountType ? accountType.severity : null;
+	};
+
 	const columns = [
 		{
 			field: "id",
@@ -29,6 +42,16 @@ const AccountsTable = () => {
 			field: "createdAt",
 			header: "Created On",
 			body: (rowData) => formatTimeStamp(rowData.createdAt),
+		},
+		{
+			field: "accountType",
+			header: "Account Type",
+			body: (rowData) => (
+				<Tag
+					value={rowData.accountType}
+					severity={getSeverity(rowData.accountType)}
+				/>
+			),
 		},
 	];
 

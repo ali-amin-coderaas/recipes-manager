@@ -35,6 +35,11 @@ const ShopsTable = ({ id, ...rest }) => {
 			header: "Created On",
 			body: (rowData) => formatTimeStamp(rowData.createdAt),
 		},
+		{
+			field: "industry",
+			header: "Industry",
+			body: (rowData) => rowData.industry,
+		},
 	];
 
 	const createFields = [
