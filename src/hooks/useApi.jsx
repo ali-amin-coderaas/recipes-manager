@@ -92,18 +92,18 @@ function useApi(endpoint, enableUseEffect = false) {
 		}
 	};
 
-	const getShopItemById = async (accountId, shopId) => {
-		setIsLoading(true);
+	// const getShopItemById = async (accountId, shopId) => {
+	// 	setIsLoading(true);
 
-		try {
-			const response = await apiService.getShopById(accountId, shopId);
-			return response.data;
-		} catch (error) {
-			setError(error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	// 	try {
+	// 		const response = await apiService.getShopById(accountId, shopId);
+	// 		return response.data;
+	// 	} catch (error) {
+	// 		setError(error);
+	// 	} finally {
+	// 		setIsLoading(false);
+	// 	}
+	// };
 
 	const deleteItem = async (id) => {
 		setIsLoading(true);

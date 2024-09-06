@@ -10,6 +10,10 @@ const AccountPage = () => {
 	const navigate = useNavigate();
 
 	const { accountId } = useParams();
+	console.log(
+		"🚀 ~ file: AccountPage.jsx:13 ~ AccountPage ~ accountId:",
+		accountId
+	);
 
 	useEffect(() => {
 		const fetchAccount = async () => {

@@ -6,6 +6,10 @@ import DialogComponent from "./DialogComponent";
 
 const ShopsTable = ({ accountId, ...rest }) => {
 	let endpoint = `accounts/${accountId}/shops`;
+	console.log(
+		"🚀 ~ file: ShopsTable.jsx:10 ~ ShopsTable ~ accountId:",
+		accountId
+	);
 	const columns = [
 		{
 			field: "id",
@@ -16,7 +20,7 @@ const ShopsTable = ({ accountId, ...rest }) => {
 			field: "name",
 			header: "Name",
 			body: (rowData) => (
-				<Link to={`/${endpoint}/${rowData.shopId}/`} className="text-primary">
+				<Link to={`/${endpoint}/${rowData.id}`} className="text-primary">
 					{rowData.name}
 				</Link>
 			),

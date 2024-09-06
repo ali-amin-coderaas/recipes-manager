@@ -30,9 +30,9 @@ class ApiService {
 		}
 	}
 
-	async getById(accountId) {
+	async getById(id) {
 		try {
-			const response = await api.get(`/${this.endpoint}/${accountId}`);
+			const response = await api.get(`/${this.endpoint}/${id}`);
 			return {
 				data: response.data,
 			};
@@ -41,16 +41,16 @@ class ApiService {
 		}
 	}
 
-	async getShopById(shopId) {
-		try {
-			const response = await api.get(`/${this.endpoint}/${shopId}`);
-			return {
-				data: response.data,
-			};
-		} catch (error) {
-			throw error;
-		}
-	}
+	// async getShopById(shopId) {
+	// 	try {
+	// 		const response = await api.get(`/${this.endpoint}/${shopId}`);
+	// 		return {
+	// 			data: response.data,
+	// 		};
+	// 	} catch (error) {
+	// 		throw error;
+	// 	}
+	// }
 
 	async softDelete(id) {
 		try {
