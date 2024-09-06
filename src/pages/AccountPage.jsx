@@ -9,12 +9,12 @@ const AccountPage = () => {
 	const [account, setAccount] = useState({});
 	const navigate = useNavigate();
 
-	const { id } = useParams();
+	const { accountId } = useParams();
 
 	useEffect(() => {
 		const fetchAccount = async () => {
 			try {
-				const account = await getItemById(id);
+				const account = await getItemById(accountId);
 				if (!account) {
 					navigate("/accounts");
 					throw new Error("Account not found");
@@ -25,7 +25,7 @@ const AccountPage = () => {
 			}
 		};
 		fetchAccount();
-	}, [id]);
+	}, [accountId]);
 
 	return (
 		<div className=" flex flex-column gap-4 align-items-center ">
@@ -37,7 +37,7 @@ const AccountPage = () => {
 				fields={["name"]}
 				className="w-full"
 			/>
-			<ShopsTable className="w-full" id={id} />
+			<ShopsTable className="w-full" accountId={accountId} />
 		</div>
 	);
 };

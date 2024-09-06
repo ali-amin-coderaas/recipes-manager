@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { formatTimeStamp } from "../utils/FormatTimeStamp";
 import DataTableComponent from "./DataTableComponent";
 import DialogComponent from "./DialogComponent";
-const ShopsTable = ({ id, ...rest }) => {
-	let endpoint = `accounts/${id}/shops`;
+
+const ShopsTable = ({ accountId, ...rest }) => {
+	let endpoint = `accounts/${accountId}/shops`;
 	const columns = [
 		{
 			field: "id",
@@ -15,7 +16,7 @@ const ShopsTable = ({ id, ...rest }) => {
 			field: "name",
 			header: "Name",
 			body: (rowData) => (
-				<Link to={`/${endpoint}/${rowData.id}`} className="text-primary">
+				<Link to={`/${endpoint}/${rowData.shopId}/`} className="text-primary">
 					{rowData.name}
 				</Link>
 			),

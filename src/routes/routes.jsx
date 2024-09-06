@@ -1,6 +1,7 @@
 import AccountPage from "..//pages/AccountPage";
 import Root from "../components/layout/Root";
 import ErrorPage from "../ErrorPage";
+import ShopPage from "../pages/ShopPage";
 import AccountsView from "../views/AccountsView";
 import DashboardView from "../views/DashboardView";
 import LoginView from "../views/LoginView";
@@ -43,10 +44,20 @@ const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: "/accounts/:id",
+				path: "/accounts/:accountId",
 				element: (
 					<ProtectedRoute>
 						<AccountPage />
+					</ProtectedRoute>
+				),
+				errorElement: <ErrorPage />,
+			},
+
+			{
+				path: "/accounts/:accountId/shops/:shopId",
+				element: (
+					<ProtectedRoute>
+						<ShopPage />
 					</ProtectedRoute>
 				),
 				errorElement: <ErrorPage />,

@@ -59,7 +59,7 @@ function useApi(endpoint, enableUseEffect = false) {
 		setIsLoading(true);
 		try {
 			const updatedData = await apiService.update(id, data);
-			console.log("🚀 ~ updateItem ~ updatedData:", updatedData)
+			console.log("🚀 ~ updateItem ~ updatedData:", updatedData);
 			return updatedData.data.items;
 		} catch (error) {
 			setError(error);
@@ -92,6 +92,19 @@ function useApi(endpoint, enableUseEffect = false) {
 		}
 	};
 
+	const getShopItemById = async (accountId, shopId) => {
+		setIsLoading(true);
+
+		try {
+			const response = await apiService.getShopById(accountId, shopId);
+			return response.data;
+		} catch (error) {
+			setError(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	const deleteItem = async (id) => {
 		setIsLoading(true);
 		try {
@@ -116,6 +129,7 @@ function useApi(endpoint, enableUseEffect = false) {
 		updateItem,
 		getItemById,
 		deleteItem,
+		getShopItemById,
 		searchQuery,
 		currentPage,
 		totalItems,

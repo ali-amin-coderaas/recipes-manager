@@ -30,9 +30,20 @@ class ApiService {
 		}
 	}
 
-	async getById(id) {
+	async getById(accountId) {
 		try {
-			const response = await api.get(`/${this.endpoint}/${id}`);
+			const response = await api.get(`/${this.endpoint}/${accountId}`);
+			return {
+				data: response.data,
+			};
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async getShopById(shopId) {
+		try {
+			const response = await api.get(`/${this.endpoint}/${shopId}`);
 			return {
 				data: response.data,
 			};

@@ -79,7 +79,7 @@ const AccountsTable = () => {
 		<DataTableComponent
 			endpoint={endpoint}
 			columns={columns}
-			createDialog={DialogComponent }
+			createDialog={DialogComponent}
 			fields={createFields}
 		/>
 	);
